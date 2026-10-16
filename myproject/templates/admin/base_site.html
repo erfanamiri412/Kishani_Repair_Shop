@@ -1,0 +1,183 @@
+
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% if subtitle %}{{ subtitle }} | {% endif %}
+    {{ title }} | {{ site_title|default:_('Django site admin') }}
+{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}">
+        {{ site_header|default:_('Django administration') }}
+    </a>
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+
+    <style>
+        /* =========================================
+           عرض کامل فضای محتوای مدیریت
+        ========================================= */
+
+        #content {
+            width: auto !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+        }
+
+        #content-main {
+            float: none !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* =========================================
+           صفحه اول مدیریت
+        ========================================= */
+
+        body.dashboard #content-related,
+        #recent-actions-module {
+            display: none !important;
+        }
+
+        body.dashboard #content-main .module,
+        body.dashboard #content-main .app-list {
+            float: none !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        body.dashboard #content-main .module table,
+        body.dashboard #content-main .app-list table {
+            display: table !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* =========================================
+           فهرست رکوردها در تمام بخش‌های ادمین
+        ========================================= */
+
+        #changelist {
+            display: block !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #changelist-filter {
+            display: none !important;
+        }
+
+        #changelist .changelist-form-container,
+        #changelist #changelist-form {
+            float: none !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* اسکرول افقی فقط در صورت نیاز */
+
+        #changelist-form .results {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-x: auto !important;
+            box-sizing: border-box !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #changelist-form .results table {
+            width: max-content !important;
+            min-width: 100% !important;
+            max-width: none !important;
+            box-sizing: border-box !important;
+        }
+
+        /* =========================================
+           جدول‌های داخل فرم‌ها و Inlineها
+        ========================================= */
+
+        #content-main .inline-group,
+        #content-main .inline-group .tabular {
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #content-main .inline-group .tabular {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #content-main .inline-group .tabular table {
+            width: max-content !important;
+            min-width: 100% !important;
+            max-width: none !important;
+        }
+
+        /* جلوگیری از بیرون‌زدن اجزای داخلی */
+
+        #container,
+        #content,
+        #content-main,
+        #changelist,
+        .changelist-form-container {
+            min-width: 0;
+        }
+
+        /* =========================================
+           واکنش‌گرایی موبایل و تبلت
+        ========================================= */
+
+        @media (max-width: 768px) {
+            #content {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+            body.dashboard #content-main .module,
+            body.dashboard #content-main .app-list {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            #changelist,
+            #changelist .changelist-form-container,
+            #changelist #changelist-form {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            #changelist-form .results table,
+            #content-main .inline-group .tabular table {
+                min-width: 720px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #content {
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+            }
+        }
+    </style>
+{% endblock %}

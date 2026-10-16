@@ -1,0 +1,1039 @@
+{% load report_tags %}
+
+<main class="invoice-page report-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="invoice-header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+
+                <img
+                    src="{{ logo_src }}"
+                    alt="تعمیرگاه تخصصی کیشانی"
+                >
+
+            </div>
+
+            <div class="brand-content">
+
+                <h1>
+                    تعمیرگاه تخصصی کیشانی
+                </h1>
+
+                <p>
+                    سیستم جامع گزارش‌گیری و تحلیل عملکرد
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="invoice-heading">
+
+            <span class="invoice-label">
+                {% if report_type == "yearly" %}
+                    گزارش عملکرد سالانه
+                {% else %}
+                    گزارش عملکرد ماهانه
+                {% endif %}
+            </span>
+
+            <strong>
+                {{ report_title|default:"گزارش عملکرد تعمیرگاه" }}
+            </strong>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <section class="invoice-meta">
+
+        <div class="meta-item">
+
+            <span>
+                نوع گزارش
+            </span>
+
+            <strong>
+                {% if report_type == "yearly" %}
+                    سالانه
+                {% else %}
+                    ماهانه
+                {% endif %}
+            </strong>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span>
+                دوره
+            </span>
+
+            <strong>
+                {% if report_type == "yearly" %}
+                    سال {{ report.year }}
+                {% else %}
+                    {{ report.month_label }}
+                {% endif %}
+            </strong>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span>
+                شروع دوره
+            </span>
+
+            <strong>
+                {{ report.period_start }}
+            </strong>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span>
+                پایان دوره
+            </span>
+
+            <strong>
+                {{ report.period_end }}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         COVER / SUMMARY
+    ====================================================== -->
+
+    <section class="report-cover">
+
+        <div class="report-cover-title">
+            خلاصه مدیریتی گزارش
+        </div>
+
+        <div class="report-cover-subtitle">
+            تحلیل داده‌های ثبت‌شده در سامانه طی دوره مورد نظر
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINANCIAL KPI
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                01
+            </span>
+
+            <div>
+                <strong>
+                    شاخص‌های مالی
+                </strong>
+
+                <small>
+                    دخل، خرج، سود و مطالبات
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-kpi-grid">
+
+            <div class="report-kpi primary">
+
+                <span>
+                    کل درآمد نقدی
+                </span>
+
+                <strong>
+                    {{ report.financial.total_income|report_currency }}
+                </strong>
+
+            </div>
+
+            <div class="report-kpi">
+
+                <span>
+                    مبلغ فاکتورها
+                </span>
+
+                <strong>
+                    {{ report.financial.invoice_amount|report_currency }}
+                </strong>
+
+            </div>
+
+            <div class="report-kpi warning">
+
+                <span>
+                    کل خروجی / هزینه
+                </span>
+
+                <strong>
+                    {{ report.financial.cash_outflow|report_currency }}
+                </strong>
+
+            </div>
+
+            <div class="report-kpi positive">
+
+                <span>
+                    سود مدیریتی
+                </span>
+
+                <strong>
+                    {{ report.financial.management_profit|report_currency }}
+                </strong>
+
+            </div>
+
+            <div class="report-kpi">
+
+                <span>
+                    جریان نقدی خالص
+                </span>
+
+                <strong>
+                    {{ report.financial.cashflow|report_currency }}
+                </strong>
+
+            </div>
+
+            <div class="report-kpi warning">
+
+                <span>
+                    مطالبات
+                </span>
+
+                <strong>
+                    {{ report.financial.receivables|report_currency }}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="report-card" style="margin-top:8px;">
+
+            <table class="report-table">
+
+                <thead>
+
+                    <tr>
+                        <th>شاخص</th>
+                        <th>مقدار</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>هزینه‌های جاری</td>
+                        <td class="amount">{{ report.financial.daily_expenses|report_currency }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>پرداخت حقوق</td>
+                        <td class="amount">{{ report.financial.salary_paid|report_currency }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>هزینه قطعات</td>
+                        <td class="amount">{{ report.financial.parts_cost|report_currency }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>هزینه تراشکاری</td>
+                        <td class="amount">{{ report.financial.machining_cost|report_currency }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>تعداد فاکتورها</td>
+                        <td class="center">{{ report.financial.invoice_count|report_number }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>تعداد پرداخت‌ها</td>
+                        <td class="center">{{ report.financial.payment_count|report_number }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>میانگین مبلغ فاکتور</td>
+                        <td class="amount">{{ report.financial.average_invoice|report_currency }}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         OPERATIONS
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                02
+            </span>
+
+            <div>
+                <strong>
+                    عملکرد عملیاتی
+                </strong>
+
+                <small>
+                    پذیرش، تعمیرات و رضایت مشتری
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            <table class="report-table">
+
+                <thead>
+
+                    <tr>
+                        <th>شاخص</th>
+                        <th>مقدار</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr><td>درخواست‌های خدمات</td><td class="center">{{ report.operations.service_requests }}</td></tr>
+                    <tr><td>مشتریان جدید</td><td class="center">{{ report.operations.new_customers }}</td></tr>
+                    <tr><td>خودروهای جدید</td><td class="center">{{ report.operations.new_vehicles }}</td></tr>
+                    <tr><td>تعداد تعمیرات</td><td class="center">{{ report.operations.repairs }}</td></tr>
+                    <tr><td>تعمیرات تکمیل‌شده</td><td class="center">{{ report.operations.completed_repairs }}</td></tr>
+                    <tr><td>تعمیرات تحویل‌شده</td><td class="center">{{ report.operations.delivered_repairs }}</td></tr>
+                    <tr><td>مجموع زمان تعمیر</td><td class="center">{{ report.operations.total_repair_minutes }} دقیقه</td></tr>
+                    <tr><td>میانگین زمان تعمیر</td><td class="center">{{ report.operations.average_repair_minutes }} دقیقه</td></tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INVOICES
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                03
+            </span>
+
+            <div>
+                <strong>
+                    تحلیل فاکتورها
+                </strong>
+
+                <small>
+                    خدمات، قطعات و وضعیت پرداخت
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            <table class="report-table">
+
+                <thead>
+
+                    <tr>
+                        <th>نوع قلم</th>
+                        <th>تعداد</th>
+                        <th>مبلغ</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for key, item in report.invoices.items_by_type.items %}
+
+                        <tr>
+                            <td>{{ item.title }}</td>
+                            <td class="center">{{ item.count }}</td>
+                            <td class="amount">{{ item.amount|report_currency }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <table class="report-table" style="margin-top:8px;">
+
+                <thead>
+
+                    <tr>
+                        <th>وضعیت</th>
+                        <th>تعداد</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr><td>تسویه‌شده</td><td class="center">{{ report.invoices.status.paid }}</td></tr>
+                    <tr><td>تسویه ناقص</td><td class="center">{{ report.invoices.status.partial }}</td></tr>
+                    <tr><td>پرداخت‌نشده</td><td class="center">{{ report.invoices.status.pending }}</td></tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INVENTORY
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                04
+            </span>
+
+            <div>
+                <strong>
+                    تحلیل انبار
+                </strong>
+
+                <small>
+                    موجودی، ارزش و قطعات مصرفی
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            <table class="report-table">
+
+                <tbody>
+
+                    <tr><td>تعداد قطعات</td><td class="center">{{ report.inventory.part_count }}</td></tr>
+                    <tr><td>تعداد دسته‌بندی‌ها</td><td class="center">{{ report.inventory.category_count }}</td></tr>
+                    <tr><td>تعداد تأمین‌کنندگان</td><td class="center">{{ report.inventory.supplier_count }}</td></tr>
+                    <tr><td>تعداد واحد موجودی</td><td class="center">{{ report.inventory.stock_units }}</td></tr>
+                    <tr><td>ارزش خرید موجودی</td><td class="amount">{{ report.inventory.purchase_value|report_currency }}</td></tr>
+                    <tr><td>ارزش فروش موجودی</td><td class="amount">{{ report.inventory.sale_value|report_currency }}</td></tr>
+                    <tr><td>سود بالقوه موجودی</td><td class="amount">{{ report.inventory.potential_profit|report_currency }}</td></tr>
+                    <tr><td>هشدار کمبود موجودی</td><td class="center">{{ report.inventory.low_stock }}</td></tr>
+                    <tr><td>ردیف قطعات تعمیرات</td><td class="center">{{ report.inventory.repair_part_lines }}</td></tr>
+                    <tr><td>قطعات ثبت‌شده به‌عنوان خرید</td><td class="center">{{ report.inventory.purchased_part_lines }}</td></tr>
+                    <tr><td>قطعات مشتری</td><td class="center">{{ report.inventory.customer_part_lines }}</td></tr>
+                    <tr><td>هزینه خرید قطعات</td><td class="amount">{{ report.inventory.purchased_part_cost|report_currency }}</td></tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EMPLOYEES
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                05
+            </span>
+
+            <div>
+                <strong>
+                    عملکرد کارکنان
+                </strong>
+
+                <small>
+                    مقایسه حجم کار، اجرت و رضایت
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            {% if report.employees %}
+
+                <table class="report-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>کارمند</th>
+                            <th>سمت</th>
+                            <th>تعمیرات</th>
+                            <th>اجرت</th>
+                            <th>رضایت</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for employee in report.employees %}
+
+                            <tr>
+
+                                <td>{{ employee.employee }}</td>
+                                <td>{{ employee.role }}</td>
+                                <td class="center">{{ employee.repair_count }}</td>
+                                <td class="amount">{{ employee.labor_income|report_currency }}</td>
+                                <td class="center">{{ employee.average_satisfaction }}</td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% else %}
+
+                <div class="chart-empty">
+                    اطلاعاتی برای عملکرد کارکنان ثبت نشده است.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DAILY ACTIVITY
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                06
+            </span>
+
+            <div>
+                <strong>
+                    فعالیت‌های روزانه و حقوق
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            <table class="report-table">
+
+                <tbody>
+
+                    <tr><td>رکوردهای حضور</td><td class="center">{{ report.activity.attendance_count }}</td></tr>
+                    <tr><td>روزهای حضور</td><td class="center">{{ report.activity.present_days }}</td></tr>
+                    <tr><td>روزهای غیبت</td><td class="center">{{ report.activity.absent_days }}</td></tr>
+                    <tr><td>روزهای مرخصی</td><td class="center">{{ report.activity.leave_days }}</td></tr>
+                    <tr><td>روزهای تأخیر</td><td class="center">{{ report.activity.late_days }}</td></tr>
+                    <tr><td>روزهای نیمه‌وقت</td><td class="center">{{ report.activity.half_days }}</td></tr>
+                    <tr><td>تعداد درآمدهای روزانه</td><td class="center">{{ report.activity.daily_income_count }}</td></tr>
+                    <tr><td>تعداد هزینه‌های روزانه</td><td class="center">{{ report.activity.daily_expense_count }}</td></tr>
+                    <tr><td>تعداد یادداشت‌های روزانه</td><td class="center">{{ report.activity.daily_note_count }}</td></tr>
+                    <tr><td>تعداد حقوق‌پردازی</td><td class="center">{{ report.activity.payroll_count }}</td></tr>
+                    <tr><td>تعداد پرداخت حقوق</td><td class="center">{{ report.activity.salary_payment_count }}</td></tr>
+                    <tr><td>تعداد مساعده</td><td class="center">{{ report.activity.salary_advance_count }}</td></tr>
+                    <tr><td>مبلغ مساعده</td><td class="amount">{{ report.activity.salary_advance_amount|report_currency }}</td></tr>
+                    <tr><td>تعداد پاداش</td><td class="center">{{ report.activity.salary_bonus_count }}</td></tr>
+                    <tr><td>مبلغ پاداش</td><td class="amount">{{ report.activity.salary_bonus_amount|report_currency }}</td></tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         COMMUNICATION
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                07
+            </span>
+
+            <div>
+                <strong>
+                    ارتباطات
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            <table class="report-table">
+
+                <tbody>
+                    <tr><td>کل ارتباطات</td><td class="center">{{ report.communications.count }}</td></tr>
+                    <tr><td>ارسال موفق</td><td class="center">{{ report.communications.sent }}</td></tr>
+                    <tr><td>ارسال ناموفق</td><td class="center">{{ report.communications.failed }}</td></tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TOP SERVICES / CUSTOMERS
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                08
+            </span>
+
+            <div>
+                <strong>
+                    خدمات و مشتریان شاخص
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            {% if report.top_services %}
+
+                <table class="report-table">
+
+                    <thead>
+                        <tr>
+                            <th>خدمت</th>
+                            <th>تعداد</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for service in report.top_services %}
+
+                            <tr>
+                                <td>{{ service.service_title|default:service.service_type }}</td>
+                                <td class="center">{{ service.count }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% endif %}
+
+
+            {% if report.top_customers %}
+
+                <table class="report-table" style="margin-top:8px;">
+
+                    <thead>
+                        <tr>
+                            <th>مشتری</th>
+                            <th>فاکتورها</th>
+                            <th>مبلغ</th>
+                            <th>پرداخت</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for customer in report.top_customers %}
+
+                            <tr>
+                                <td>{{ customer.customer }}</td>
+                                <td class="center">{{ customer.invoice_count }}</td>
+                                <td class="amount">{{ customer.amount|report_currency }}</td>
+                                <td class="amount">{{ customer.paid_amount|report_currency }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHARTS
+    ====================================================== -->
+
+    <section class="report-page-break"></section>
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                09
+            </span>
+
+            <div>
+                <strong>
+                    تحلیل نموداری
+                </strong>
+
+                <small>
+                    روندها و مقایسه شاخص‌های کلیدی
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-chart-card">
+            <div class="report-chart">
+                {{ chart_svgs.cashflow|safe }}
+            </div>
+        </div>
+
+        <div class="report-chart-card">
+            <div class="report-chart">
+                {{ chart_svgs.revenue_mix|safe }}
+            </div>
+        </div>
+
+        <div class="report-chart-card">
+            <div class="report-chart">
+                {{ chart_svgs.services|safe }}
+            </div>
+        </div>
+
+        <div class="report-chart-card">
+            <div class="report-chart">
+                {{ chart_svgs.mechanics|safe }}
+            </div>
+        </div>
+
+        <div class="report-chart-card">
+            <div class="report-chart">
+                {{ chart_svgs.parts|safe }}
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         YEARLY MONTHLY ANALYSIS
+    ====================================================== -->
+
+    {% if report_type == "yearly" and report.monthly_data %}
+
+        <section class="report-section report-page-break">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    10
+                </span>
+
+                <div>
+                    <strong>
+                        مقایسه ماه‌های سال
+                    </strong>
+
+                    <small>
+                        درآمد، هزینه و خالص هر ماه
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="report-card">
+
+                <table class="report-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>ماه</th>
+                            <th>درآمد</th>
+                            <th>هزینه</th>
+                            <th>خالص</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for month in report.monthly_data %}
+
+                            <tr>
+                                <td>{{ month.label }}</td>
+                                <td class="amount">{{ month.income|report_currency }}</td>
+                                <td class="amount">{{ month.expense|report_currency }}</td>
+                                <td class="amount">{{ month.net|report_currency }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         ML ANALYSIS
+    ====================================================== -->
+
+    <section class="report-section">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                {% if report_type == "yearly" %}
+                    11
+                {% else %}
+                    10
+                {% endif %}
+            </span>
+
+            <div>
+                <strong>
+                    تحلیل هوشمند و پیش‌بینی
+                </strong>
+
+                <small>
+                    خروجی تحلیل داده و پیش‌بینی روند
+                </small>
+            </div>
+
+        </div>
+
+        <div class="report-card">
+
+            {% if report.ml.next_month_income_prediction is not None %}
+
+                <div class="report-kpi report-forecast">
+
+                    <span>
+                        پیش‌بینی درآمد دوره بعد
+                    </span>
+
+                    <strong>
+                        {{ report.ml.next_month_income_prediction|report_currency }}
+                    </strong>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if report.ml.growth %}
+
+                <div class="report-analysis" style="margin-top:8px;">
+
+                    <strong>
+                        تحلیل رشد
+                    </strong>
+
+                    <p>
+
+                        رشد درآمد:
+                        {{ report.ml.growth.growth_percent|report_percent }}
+
+                        -
+                        روند:
+                        {% if report.ml.growth.trend == "up" %}
+                            صعودی
+                        {% elif report.ml.growth.trend == "down" %}
+                            نزولی
+                        {% else %}
+                            پایدار
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if report.ml.next_year_income_trend %}
+
+                <div class="report-analysis" style="margin-top:8px;">
+
+                    <strong>
+                        تحلیل روند سالانه
+                    </strong>
+
+                    <p>
+
+                        تغییرات آخرین نقاط داده بر اساس روند ثبت‌شده
+                        و برای استفاده مدیریتی در کنار سایر KPIها ارائه شده است.
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if report.ml.parts_purchase_forecast %}
+
+                <table class="report-table" style="margin-top:8px;">
+
+                    <thead>
+
+                        <tr>
+                            <th>قطعه</th>
+                            <th>موجودی</th>
+                            <th>مصرف پیش‌بینی‌شده</th>
+                            <th>پیشنهاد خرید</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for part in report.ml.parts_purchase_forecast %}
+
+                            <tr>
+
+                                <td>{{ part.part }}</td>
+                                <td class="center">{{ part.current_stock }}</td>
+                                <td class="center">{{ part.predicted_usage }}</td>
+                                <td class="center">{{ part.recommended_purchase }}</td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="invoice-footer">
+
+        <div class="contact-info">
+
+            <strong>
+                تعمیرگاه تخصصی کیشانی
+            </strong>
+
+            <span>
+                تهران، مجیدیه شمالی، بزرگراه رسالت،
+                خیابان لاهیجانی شرقی، پلاک ۱۰۱
+            </span>
+
+            <span>
+                تلفن همراه: ۰۹۱۲۳۵۳۰۴۲۳
+            </span>
+
+            <span>
+                تلفن ثابت: ۲۲۵۰۰۲۱۳
+            </span>
+
+        </div>
+
+        <div class="signature">
+
+            گزارش مدیریتی سیستمی
+
+            <span></span>
+
+        </div>
+
+    </footer>
+
+    <div class="invoice-note">
+        این گزارش به‌صورت خودکار بر اساس نسخه ثابت داده‌های ثبت‌شده در سامانه تولید شده است.
+    </div>
+
+</main>

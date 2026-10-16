@@ -1,0 +1,576 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+تعمیرگاه تخصصی کیشانی
+{% endblock title %}
+
+{% block content %}
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background pt-lg-5">
+
+      <img src="assets/img/bg2.png" alt="" class="hero-bg" data-aos="fade-in">
+      <br>
+      <div class="container">
+        <div class="row gy-lg-4 gy-1 d-flex justify-content-between">
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center pt-lg-5">
+            <br>
+              <h2
+                  data-aos="fade-up"
+                  style="text-align: center;"
+              >
+                  ما به خودروی شما اهمیت می‌دهیم
+              </h2>
+
+              <p
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                  class="fw-bolder about-description"
+              >
+                  تعمیرگاه کیشانی با درک اهمیت خودرو در زندگی روزمره شما، ترکیبی از تخصص فنی و تعهد اخلاقی را گرد هم آورده است. ما نه تنها به رفع مشکلات فنی خودروی شما می‌پردازیم، بلکه با نگاهی دقیق به استانداردهای کیفی و بهره‌گیری از متدهای مدرن، مراقب سلامت و عملکرد آن هستیم؛ چراکه ما به خودروی شما اهمیت میدهیم.
+              </p>
+              </div>
+
+          <div class="col-lg-5 order- order-lg-2 hero-img d-flex justify-content-center align-content-center" data-aos="zoom-out">
+            <img src="assets/img/logo01.png" class="img-fluid mb-3 mt-5 pt-lg-3" alt="">
+          </div>
+
+
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Featured Services Section-->
+    <section id="featured-services" class="featured-services section mt-5">
+
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div
+                    class="col-lg-6 col-md-12 service-item d-flex"
+                    data-aos="fade-up"
+                    data-aos-delay="100"
+                >
+
+                    <div class="icon flex-shrink-0">
+
+                        <img
+                            src="{% static 'assets/img/icon-0.svg' %}"
+                            alt="کیفیت و ضمانت خدمات"
+                            width="80"
+                            height="80"
+                            class="m-2"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="title">
+                            کیفیت ماندگار
+                        </h4>
+
+                        <p class="description">
+                            استفاده از قطعات مناسب و اجرای اصولی تعمیرات، کیفیت و دوام خدمات را
+                            برای عملکرد مطمئن خودرو در بلندمدت تضمین می‌کند
+                        </p>
+
+                    </div>
+
+                </div>
+                <!-- End Service Item -->
+
+
+                <div
+                    class="col-lg-6 col-md-12 service-item d-flex"
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                >
+
+                    <div class="icon flex-shrink-0">
+
+                        <img
+                            src="{% static 'assets/img/icon-1.svg' %}"
+                            alt="بررسی و هزینه منصفانه"
+                            width="80"
+                            height="80"
+                            class="m-2"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="title">
+                            هزینه منصفانه
+                        </h4>
+
+                        <p class="description">
+                            ابتدا نیاز واقعی خودرو بررسی می‌شود و هزینه خدمات متناسب با تعمیرات
+                            موردنیاز تعیین خواهد شد تا از پرداخت‌های غیرضروری جلوگیری شود
+                        </p>
+
+                    </div>
+
+                </div>
+                <!-- End Service Item -->
+
+
+                <div
+                    class="col-lg-6 col-md-12 service-item d-flex"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                >
+
+                    <div class="icon flex-shrink-0">
+
+                        <img
+                            src="{% static 'assets/img/icon-2.svg' %}"
+                            alt="سرعت در تحویل خودرو"
+                            width="80"
+                            height="80"
+                            class="m-2"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="title">
+                            تحویل سریع خودرو
+                        </h4>
+
+                        <p class="description">
+                            با برنامه‌ریزی دقیق و استفاده از تجهیزات تخصصی، تعمیرات در کوتاه‌ترین
+                            زمان منطقی انجام می‌شود تا خودرو سریع‌تر آماده تحویل باشد
+                        </p>
+
+                    </div>
+
+                </div>
+                <!-- End Service Item -->
+
+
+                <div
+                    class="col-lg-6 col-md-12 service-item d-flex"
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                >
+
+                    <div class="icon flex-shrink-0">
+
+                        <img
+                            src="{% static 'assets/img/icon-9.svg' %}"
+                            alt="رضایت مشتری"
+                            width="80"
+                            height="80"
+                            class="m-2"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="title">
+                            رضایت مشتری
+                        </h4>
+
+                        <p class="description">
+                            هدف ما ارائه خدمتی حرفه‌ای و مطمئن است تا نتیجه تعمیرات، رضایت شما
+                            و اطمینان از انتخاب تعمیرگاه را به همراه داشته باشد
+                        </p>
+
+                    </div>
+
+                </div>
+                <!-- End Service Item -->
+
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- /Featured Services Section -->
+
+    <!-- About Section -->
+     <br>
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div
+              class="col-lg-6 position-relative align-self-start order-lg-last order-first"
+              data-aos="fade-up"
+              data-aos-delay="200"
+          >
+              <div class="site-map-card">
+
+                  <iframe
+                      src="https://balad.ir/embed?p=Ptn3MneACvIB2x"
+                      frameborder="0"
+                      width="100%"
+                      height="400"
+                      allowfullscreen
+                      style="border: 0;"
+                  ></iframe>
+
+              </div>
+          </div>
+
+          <div class="col-lg-6 content order-last  order-lg-first" data-aos="fade-up" data-aos-delay="100">
+            <ul>
+
+              <li>
+                <img
+                  src="{% static 'assets/img/icon-3.svg' %}"
+                  alt="نشانی"
+                  width="60px"
+                  height="60px"
+                  class="m-2"
+                >
+
+                <div>
+                  <h5>نشانی</h5>
+                  <p>
+                    تهران، مجیدیه شمالی، بزرگراه شهید سلیمانی «رسالت»، خیابان منصوری،
+                    خیابان برادران محمودی شرقی «لاهیجانی شرقی»، پلاک 101
+                  </p>
+                </div>
+              </li>
+
+              <li>
+                <img
+                  src="{% static 'assets/img/icon-4.svg' %}"
+                  alt="ساعات کاری"
+                  width="60px"
+                  height="60px"
+                  class="mt-4 m-2"
+                >
+
+                <div>
+                  <h5>ساعات کاری</h5>
+                  <p>
+                    شنبه تا پنجشنبه<br>
+                    شیفت صبح از ساعت 8:00 تا 13:00 <br>
+                    شیفت عصر از ساعت 15:00 تا 20:00
+                  </p>
+                </div>
+              </li>
+
+            <li>
+              <img
+                src="{% static 'assets/img/icon-8.svg' %}"
+                alt="تماس"
+                width="60px"
+                height="60px"
+                class="m-2"
+              >
+
+              <div>
+                <h5>تماس</h5>
+                <p>
+                  برای استعلام هزینه، هماهنگی و یا دریافت مشاوره، لطفا از طریق شماره تماس
+                  <a href="tel:+989123530423" dir="ltr">0912 353 0423</a>&nbsp;
+                  با ما در ارتباط باشید
+                </p>
+              </div>
+            </li>
+
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+    <br>
+
+    <!-- Work Space Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="assets/img/bg1.png" alt="">
+
+      <div class="container">
+          <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+
+              <div class="col-xl-10">
+
+                  <div class="text-center">
+
+                      <h3>
+                          درباره ما
+                      </h3>
+
+                      <p class="about-description">
+                          تعمیرگاه کیشانی با اتکا بر سال‌ها تجربه و تخصص در حوزه‌ی تعمیر و نگهداری انواع خودرو،
+                          به عنوان یکی از پیشروان ارائه‌ی خدمات فنی تخصصی در این صنعت شناخته می‌شود.
+                          ما با بهره‌گیری از دانش روز، بهره‌مندی از تکنولوژی های نوین و به کارگیری ابزارهای دقیق،
+                          مفتخر به ارائه‌ی راهکارهای جامع و مطمئن برای رفع پیچیده‌ترین مشکلات فنی خودروها هستیم.
+                      </p>
+
+                  </div>
+
+              </div>
+
+          </div>
+
+
+          <div class="brand-container">
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-4.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-0.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-2.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-9.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-1.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-6.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-7.png" alt="برند خودرو">
+              </a>
+
+              <a href="{% url 'services' %}" class="brand-box">
+                  <img src="assets/img/brand-5.png" alt="برند خودرو">
+              </a>
+
+          </div>
+
+      </div>
+
+    </section><!-- /Work Space Section -->
+
+    <!-- Services Section -->
+    <br><section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <span>خدمات تخصصی خودرو<br></span>
+        <h2>خدمات ما</h2>
+        <p>
+        ارائه‌ی مجموعه‌ای کامل از خدمات تخصصی شامل تشخیص دقیق، تعمیرات حرفه‌ای و سرویس‌های دوره‌ای انواع خودرو با بهره‌گیری از دانش فنی روز و تجهیزات پیشرفته با هدف ایجاد تجربه‌ای مطمئن و استاندارد برای مشتریان و ارتقای کیفیت عملکرد خودرو در بلندمدت. </p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <a href="{% url 'service_details_1' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-1.jpg" alt="" class="img-fluid">
+                </div>
+                <h3>عیب‌یابی تخصصی خودرو</h3>
+                <p>
+                  شناسایی دقیق ایرادات فنی و الکترونیکی خودرو با استفاده از دستگاه‌های پیشرفته‌ی دیاگ،
+                  جهت جلوگیری از هزینه‌های اضافی با تشخیص سریع و اصولی مشکلات سیستم‌های مختلف خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'service_details_2' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-2.png" alt="" class="img-fluid">
+                </div>
+                <h3>سرویس‌های دوره‌ای خودرو</h3>
+                <p>
+                  انجام سرویس‌های منظم و استاندارد شامل تعویض روغن، فیلترها و بررسی کامل سیستم‌های حیاتی خودرو
+                  به‌منظور افزایش طول عمر قطعات و حفظ عملکرد بهینه‌ی خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <a href="{% url 'service_details_3' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-3.png" alt="" class="img-fluid">
+                </div>
+                <h3>تنظیم و بهینه‌سازی موتور</h3>
+                <p>
+                  بهینه‌سازی عملکرد موتور از طریق تنظیم دقیق پارامترهای فنی، کاهش مصرف سوخت،
+                  افزایش راندمان احتراق و بهبود شتاب و نرمی عملکرد خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <a href="{% url 'service_details_4' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-4.png" alt="" class="img-fluid">
+                </div>
+                <h3>تعمیر اساسی موتور</h3>
+                <p>
+                  انجام تعمیرات کامل و تخصصی موتور شامل بازسازی، تعویض قطعات فرسوده و رفع آسیب‌های جدی
+                  با هدف بازگرداندن توان و عملکرد اولیه‌ی موتور
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <a href="{% url 'service_details_5' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-5.png" alt="" class="img-fluid">
+                </div>
+                <h3>تعمیر گیربکس‌های دستی و اتومات</h3>
+                <p>
+                  ارائه‌ی خدمات تخصصی عیب‌یابی، تعمیر و بازسازی انواع گیربکس‌های دستی و اتوماتیک
+                  با بهره‌گیری از تجهیزات پیشرفته، ابزارهای دقیق و دانش فنی روز صنعت خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <a href="{% url 'service_details_6' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-6.png" alt="" class="img-fluid">
+                </div>
+                <h3>تعویض کیت کلاچ</h3>
+                <p>
+                  تعویض تخصصی کیت کلاچ با استفاده از قطعات باکیفیت و استاندارد،
+                  جهت تضمین عملکرد صحیح سیستم انتقال قدرت و افزایش دوام مجموعه‌ی کلاچ
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Services Section -->
+
+    <!-- Faq Section -->
+    <br><section id="faq" class="faq section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+
+        <span>
+            پاسخ به دغدغه‌های فنی شما
+        </span>
+
+        <h2>
+            سوالات متداول
+        </h2>
+
+        <p class="about-description">
+            در این بخش به پرسش‌های متداول درباره نگهداری، عیب‌یابی و تعمیر خودرو پاسخ می‌دهیم
+            تا با شناخت بهتر علائم و نیازهای فنی خودرو، تصمیمی آگاهانه‌تر و مطمئن‌تر بگیرید
+        </p>
+
+    </div>
+    <!-- End Section Title -->
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="faq-container">
+              <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>چرا چراغ چک ماشین روشن می‌شود؟</h3>
+                <div class="faq-content">
+                  <p>روشن شدن چراغ چک نشانه‌ی این است که کامپیوتر خودرو، خطایی را در سیستم سوخت‌رسانی، احتراق یا
+                    آلایندگی شناسایی کرده است. این خطا می‌تواند از یک مشکل ساده مثل شل بودن در باک باشد تا خرابی
+                    سنسورها. <br>توصیه: هرگز چراغ چک را نادیده نگیرید؛ حتما با دستگاه دیاگ، کد خطا را بررسی کنید تا از
+                    آسیب های احتمالی به موتور جلوگیری شود.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>صدای سوت یا جیرجیر هنگام ترمزگیری نشانه‌ی چیست؟</h3>
+                <div class="faq-content">
+                  <p>این صدا معمولا اولین هشدار برای پایان یافتن عمر لنت‌های ترمز است. لنت‌ها دارای یک قطعه فلزی کوچک
+                    هستند که وقتی ضخامت لنت به حداقل می‌رسد، با دیسک برخورد کرده و صدای سوت ایجاد می‌کند تا شما را مطلع
+                    کند. <br>توصیه: برای جلوگیری از آسیب به دیسک ترمز که بسیار هزینه‌بر است، سریعا برای تعویض لنت اقدام
+                    کنید.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>چرا موتور خودرو بیش از حد داغ می‌کند (آمپر آب بالا می‌رود)؟</h3>
+                <div class="faq-content">
+                  <p>داغ کردن موتور معمولا به سیستم خنک‌ کننده مربوط است. شایع‌ترین دلایل شامل: کمبود مایع خنک کننده(ضد
+                    یخ)، خرابی ترموستات، خرابی فن رادیاتور یا نشتی در شیلنگ‌هاست. <br>توصیه: اگر آمپر به محدوده قرمز
+                    رسید، خودرو را خاموش و سوییچ را باز بگذارید و هرگز در رادیاتور را در حالت داغ باز نکنید. </p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>علت لرزش فرمان در سرعت بالا چیست؟</h3>
+                <div class="faq-content">
+                  <p>لرزش فرمان در سرعت بالای 80 یا 100 کیلومتر، در 90 درصد مواقع به دلیل عدم بالانس بودن چرخ‌هاست. اگر
+                    لرزش فقط هنگام ترمز گرفتن رخ می‌دهد، احتمالا دیسک ترمز تاب برداشته است. <br>توصیه: ابتدا برای بالانس
+                    چرخ‌ها اقدام کنید، اگر مشکل حل نشد، جلوبندی و دیسک ترمز را بررسی کنید.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>آیا کارواش بخارشور به قطعات خودرو آسیب می‌زند؟ آیا لازم است قبل از مراجعه به تعمیرگاه، آن را کارواش
+                  ببرم؟</h3>
+                <div class="faq-content">
+                  <p>خیر، کارواش بخارشور مدرن هیچ ضرری برای موتور خودرو، به‌خصوص قطعات برقی و موتوری ندارد. بخار آب با
+                    فشار کنترل شده و دمای بالا، بدون نیاز به مواد شیمیایی قوی، چربی‌ها، آلودگی‌ها و جرم‌ها را از سطوح
+                    پاک میکند و حتی به دلیل خشک بودن بخار، خطر نفوذ آب به بخش های حساس را به حداقل می‌رساند. <br>توصیه:
+                    پیش از مراجعه به تعمیرگاه، خودروی خود را به کارواش (ترجیحا بخارشور) ببرید. این اقدام به تکنسین‌های
+                    تعمیرگاه کمک می‌کند تا عیب‌یابی دقیق‌تری انجام دهند، همجنین تمیز بودن خودروی به شما امکان بررسی بهتر
+                    وضعیت ظاهری و اجزای آن را می‌دهد. بنابرین انجام کارواش قبل از تعمیر، فرایند تشخیص و رفع اشکال را
+                    تسهیل و بهینه‌سازی می‌کند.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Faq Section -->
+    <br>
+
+
+{% endblock content %}

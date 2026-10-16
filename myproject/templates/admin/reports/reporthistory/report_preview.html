@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+    <a href="{{ pdf_url }}" target="_blank" class="button">
+        باز کردن PDF و چاپ
+    </a>
+    <a href="{% url 'admin:reports_reporthistory_changelist' %}" class="button">
+        بازگشت به گزارش‌ها
+    </a>
+</div>
+
+<div style="background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;height:calc(100vh - 180px);min-height:700px;">
+    <iframe
+        src="{{ pdf_url }}"
+        title="{{ title }}"
+        style="width:100%;height:100%;border:0;"
+    ></iframe>
+</div>
+{% endblock %}

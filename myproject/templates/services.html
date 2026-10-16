@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+خدمات ما در تعمیرگاه کیشانی
+{% endblock title %}
+
+{% block content %}
+
+<!-- Page Title -->
+<div class="page-title dark-background" data-aos="fade"
+    style="background-image: url(assets/img/img-31.jpg);">
+
+    <div class="container position-relative">
+
+        <h1>خدمات تخصصی تعمیر و نگهداری خودرو</h1>
+
+        <p class="about-description">
+            ارائه‌دهنده‌ی مجموعه‌ای جامع از خدمات تخصصی شامل تعمیر، سرویس و نگهداری انواع خودرو با بهره‌گیری از تجهیزات پیشرفته،
+            فناوری‌های روز و تکنسین‌های مجرب و کارآزموده با هدف تضمین عملکرد بهینه، افزایش عمر مفید قطعات و ارائه‌ی تجربه‌ای مطمئن
+            و شفاف برای مشتریان
+        </p>
+
+        <nav class="breadcrumbs">
+        </nav>
+
+    </div>
+
+</div>
+<!-- End Page Title -->
+
+<!-- Services Section -->
+<br><section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+
+          <span>خدمات تخصصی خودرو<br></span>
+
+          <h2>خدمات ما</h2>
+
+          <p class="about-description">
+              ارائه‌ی مجموعه‌ای کامل از خدمات تخصصی شامل تشخیص دقیق، تعمیرات حرفه‌ای و سرویس‌های دوره‌ای انواع خودرو
+              با بهره‌گیری از دانش فنی روز و تجهیزات پیشرفته با هدف ایجاد تجربه‌ای مطمئن و استاندارد برای مشتریان و
+              ارتقای کیفیت عملکرد خودرو در بلندمدت.
+          </p>
+
+      </div>
+      <!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <a href="{% url 'service_details_1' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-1.jpg" alt="" class="img-fluid">
+                </div>
+                <h3>عیب‌یابی تخصصی خودرو</h3>
+                <p>
+                  شناسایی دقیق ایرادات فنی و الکترونیکی خودرو با استفاده از دستگاه‌های پیشرفته‌ی دیاگ،
+                  جهت جلوگیری از هزینه‌های اضافی با تشخیص سریع و اصولی مشکلات سیستم‌های مختلف خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'service_details_2' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-2.png" alt="" class="img-fluid">
+                </div>
+                <h3>سرویس‌های دوره‌ای خودرو</h3>
+                <p>
+                  انجام سرویس‌های منظم و استاندارد شامل تعویض روغن، فیلترها و بررسی کامل سیستم‌های حیاتی خودرو
+                  به‌منظور افزایش طول عمر قطعات و حفظ عملکرد بهینه‌ی خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <a href="{% url 'service_details_3' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-3.png" alt="" class="img-fluid">
+                </div>
+                <h3>تنظیم و بهینه‌سازی موتور</h3>
+                <p>
+                  بهینه‌سازی عملکرد موتور از طریق تنظیم دقیق پارامترهای فنی، کاهش مصرف سوخت،
+                  افزایش راندمان احتراق و بهبود شتاب و نرمی عملکرد خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <a href="{% url 'service_details_4' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-4.png" alt="" class="img-fluid">
+                </div>
+                <h3>تعمیر اساسی موتور</h3>
+                <p>
+                  انجام تعمیرات کامل و تخصصی موتور شامل بازسازی، تعویض قطعات فرسوده و رفع آسیب‌های جدی
+                  با هدف بازگرداندن توان و عملکرد اولیه‌ی موتور
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <a href="{% url 'service_details_5' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-5.png" alt="" class="img-fluid">
+                </div>
+                <h3>تعمیر گیربکس‌های دستی و اتومات</h3>
+                <p>
+                  ارائه‌ی خدمات تخصصی عیب‌یابی، تعمیر و بازسازی انواع گیربکس‌های دستی و اتوماتیک
+                  با بهره‌گیری از تجهیزات پیشرفته، ابزارهای دقیق و دانش فنی روز صنعت خودرو
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <a href="{% url 'service_details_6' %}">
+              <div class="card">
+                <div class="card-img">
+                  <img src="assets/img/service-6.png" alt="" class="img-fluid">
+                </div>
+                <h3>تعویض کیت کلاچ</h3>
+                <p>
+                  تعویض تخصصی کیت کلاچ با استفاده از قطعات باکیفیت و استاندارد،
+                  جهت تضمین عملکرد صحیح سیستم انتقال قدرت و افزایش دوام مجموعه‌ی کلاچ
+                </p>
+              </div>
+            </a>
+          </div><!-- End Card Item -->
+
+        </div>
+
+      </div>
+
+</section><!-- /Services Section -->
+<br>
+
+{% endblock content %}

@@ -1,0 +1,391 @@
+{% load static report_filters %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report_title }}</title>
+    <style>
+        {{ report_css }}
+        @page { size: A4 portrait; margin: 0; }
+        * { box-sizing: border-box; }
+        body.preview-report { margin: 0; color: #172033; background: #eef1f5; font-family: Tahoma, Arial, sans-serif; direction: rtl; }
+        .report-page { width: 210mm; min-height: 297mm; padding: 12mm 13mm 13mm; margin: 0 auto; position: relative; background: #fff; overflow: visible; page-break-after: always; }
+        .report-page:last-child { page-break-after: auto; }
+        .report-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 3px solid #001973; padding-bottom: 13px; margin-bottom: 13px; }
+        .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .brand-logo { width: 52px; height: 52px; flex: 0 0 52px; display: flex; align-items: center; justify-content: center; }
+        .brand-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .brand h1 { margin: 0; color: #001973; font-size: 16px; font-weight: 900; }
+        .brand p { margin: 5px 0 0; color: #697386; font-size: 8px; }
+        .report-headline { text-align: left; max-width: 50%; }
+        .report-headline span { display: block; color: #8a93a3; font-size: 8px; margin-bottom: 5px; }
+        .report-headline strong { display: block; color: #001973; font-size: 14px; line-height: 1.7; }
+        .report-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin: 10px 0 14px; }
+        .meta-item { padding: 8px 9px; border: 1px solid #dce3ee; border-radius: 7px; background: #f8fafc; }
+        .meta-item span { display: block; font-size: 8px; color: #7c8798; }
+        .meta-item strong { display: block; font-size: 10px; color: #172033; margin-top: 4px; font-weight: 800; }
+        .section { margin-top: 11px; break-inside: avoid; }
+        .section-head { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #e0e6ef; padding-bottom: 6px; margin-bottom: 8px; }
+        .section-num { display: inline-flex; align-items: center; justify-content: center; width: 23px; height: 23px; border-radius: 7px; background: #001973; color: #fff; font-size: 9px; font-weight: 900; flex: 0 0 23px; }
+        .section-head strong { color: #001973; font-size: 12px; font-weight: 900; }
+        .section-head small { color: #7c8798; font-size: 8px; margin-right: auto; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+        .kpi { border: 1px solid #dce3ee; border-radius: 8px; padding: 9px 10px; background: #fbfcfe; min-height: 58px; }
+        .kpi.primary { background: #f0f4ff; border-color: #c9d5f4; }
+        .kpi span { display: block; color: #687386; font-size: 9px; line-height: 1.55; }
+        .kpi strong { display: block; color: #001973; margin-top: 5px; font-size: 13px; font-weight: 900; overflow-wrap: anywhere; }
+        .kpi em { display: block; color: #8892a2; margin-top: 3px; font-style: normal; font-size: 8px; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+        .three-col { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; align-items: start; }
+        .report-chart { border: 1px solid #e0e6ef; border-radius: 8px; padding: 8px 9px; background: #fff; margin: 7px 0; overflow: visible; break-inside: avoid; }
+        .report-chart-svg { width: 100%; height: auto; display: block; overflow: visible; }
+        .report-chart-empty { min-height: 76px; padding: 14px 15px; border: 1px dashed #c9d3e0; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: #7b8494; font-size: 10px; line-height: 1.8; }
+        .report-chart-empty strong { color: #001973; font-size: 12px; }
+        .chart-title { fill: #001973; font-size: 18px; font-weight: 900; font-family: Tahoma, Arial, sans-serif; }
+        .chart-unit { fill: #8791a1; font-size: 13px; font-family: Tahoma, Arial, sans-serif; }
+        .chart-grid { stroke: #e5eaf2; stroke-width: 1; stroke-dasharray: 3 4; }
+        .chart-axis { stroke: #a9b5c7; stroke-width: 1.2; }
+        .chart-label, .chart-legend, .chart-y-label { fill: #526074; font-size: 16px; font-family: Tahoma, Arial, sans-serif; }
+        .chart-y-label { fill: #677489; font-size: 13px; }
+        .chart-bar-value { fill: #253247; font-size: 15px; font-weight: 900; font-family: Tahoma, Arial, sans-serif; }
+        .chart-donut-total { fill: #001973; font-size: 22px; font-weight: 900; font-family: Tahoma, Arial, sans-serif; }
+        .report-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 6px; font-size: 9px; overflow: hidden; border: 1px solid #dce3ee; border-radius: 7px; }
+        .report-table th, .report-table td { overflow-wrap: anywhere; padding: 6px 6px; border-bottom: 1px solid #e4e9f1; text-align: center; vertical-align: middle; line-height: 1.65; }
+        .report-table th { background: #001973; color: #fff; font-weight: 800; font-size: 9px; }
+        .report-table tr:last-child td { border-bottom: 0; }
+        .report-table tbody tr:nth-child(even) td { background: #f8fafc; }
+        .report-table td.text { text-align: right; }
+        .report-table .emphasis { color: #001973; font-weight: 900; }
+        .subheading { margin: 9px 0 5px; font-size: 9px; color: #001973; font-weight: 900; }
+        .note { margin: 7px 0; padding: 8px 10px; border-radius: 7px; background: #f8fafc; border: 1px solid #dce3ee; color: #526074; font-size: 9px; line-height: 1.85; }
+        .note.warning { background: #fff9ed; border-color: #ead7ae; }
+        .note strong { color: #001973; }
+        .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+        .insight { border-right: 3px solid #c8a45d; background: #fbfcfe; padding: 8px 10px; border-radius: 5px; border-top: 1px solid #e4e9f1; border-bottom: 1px solid #e4e9f1; border-left: 1px solid #e4e9f1; min-height: 45px; }
+        .insight strong { display: block; font-size: 9px; color: #001973; margin-bottom: 4px; }
+        .insight span { display: block; font-size: 9px; line-height: 1.8; color: #526074; }
+        .empty-line { color: #8a93a3; text-align: center; padding: 10px; font-size: 9px; }
+        .report-footer { position: absolute; bottom: 7mm; right: 13mm; left: 13mm; padding-top: 6px; border-top: 1px solid #e0e6ef; display: flex; justify-content: space-between; gap: 10px; color: #8a93a3; font-size: 7px; }
+        .data-warning-list { margin: 0; padding-right: 17px; color: #6a5360; font-size: 9px; line-height: 1.9; }
+        .muted { color: #8490a2; }
+        .good { color: #16836b; font-weight: 800; }
+        .bad { color: #d95d39; font-weight: 800; }
+        @media screen { body.preview-report { background: #eef1f5; } .report-page { margin: 18px auto; box-shadow: 0 12px 35px rgba(0,0,0,.10); } }
+        @media print { body.preview-report { background: #fff; } .report-page { margin: 0; box-shadow: none; } }
+    </style>
+</head>
+<body class="preview-report">
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand">
+            <div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div>
+            <div><h1>تعمیرگاه تخصصی کیشانی</h1><p>مرکز تخصصی تعمیر و نگهداری خودرو</p></div>
+        </div>
+        <div class="report-headline"><span>گزارش عملکرد مدیریتی</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="report-meta">
+        <div class="meta-item"><span>نوع گزارش</span><strong>{% if report_type == "yearly" %}سالانه{% elif report_type == "custom" %}سفارشی{% else %}ماهانه{% endif %}</strong></div>
+        <div class="meta-item"><span>سال</span><strong>{{ report.year|default:"—" }}</strong></div>
+        <div class="meta-item"><span>شروع دوره</span><strong>{{ report.period_start|jalali_date }}</strong></div>
+        <div class="meta-item"><span>پایان دوره</span><strong>{{ report.period_end|jalali_date }}</strong></div>
+    </div>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">01</span><strong>نمای مدیریتی در یک نگاه</strong><small>اعداد براساس رکوردهای همین دوره محاسبه شده‌اند</small></div>
+        <div class="kpi-grid">
+            <div class="kpi primary"><span>درآمد فاکتورهای صادرشده</span><strong>{{ report.financial.invoiced_revenue|report_money }}</strong><em>مبنای فاکتور</em></div>
+            <div class="kpi primary"><span>وجه وصول‌شده از فاکتورها</span><strong>{{ report.financial.cash_collected|report_money }}</strong><em>مبنای تاریخ پرداخت</em></div>
+            <div class="kpi"><span>سایر درآمدهای ثبت‌شده</span><strong>{{ report.financial.other_income|report_money }}</strong><em>دفتر درآمد روزانه</em></div>
+            <div class="kpi"><span>هزینه‌های روزانه</span><strong>{{ report.financial.daily_expenses|report_money }}</strong><em>دفتر هزینه</em></div>
+            <div class="kpi"><span>حقوق پرداخت‌شده</span><strong>{{ report.financial.salary_paid|report_money }}</strong><em>بر مبنای تاریخ پرداخت</em></div>
+            <div class="kpi primary"><span>نتیجه عملیاتی برآوردی</span><strong>{{ report.financial.management_profit|report_money }}</strong><em>برآورد مدیریتی، نه سود حسابرسی‌شده</em></div>
+            <div class="kpi"><span>مطالبات تا پایان دوره</span><strong>{{ report.financial.receivables|report_money }}</strong><em>فاکتورهای صادرشده تا پایان دوره</em></div>
+            <div class="kpi"><span>میانگین مبلغ فاکتور جدید</span><strong>{{ report.financial.average_invoice|report_money }}</strong><em>{{ report.financial.invoice_count|report_number }} فاکتور صادرشده</em></div>
+        </div>
+        <div class="note warning"><strong>نکته مالی:</strong> «وجه وصول‌شده» با «درآمد فاکتورهای صادرشده» یکسان نیست. نتیجه عملیاتی برآوردی براساس داده‌های ثبت‌شده محاسبه شده و بهای تمام‌شده قطعات انبار، خرید تاریخی کامل، سربار و حقوق تعهدشده‌ای که ثبت نشده باشد می‌تواند دقت آن را محدود کند.</div>
+    </div>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">02</span><strong>عملیات تعمیرگاه</strong><small>تعداد رکوردهای عملیاتی در بازه گزارش</small></div>
+        <table class="report-table">
+            <thead><tr><th>شاخص</th><th>مقدار</th><th>شاخص</th><th>مقدار</th></tr></thead>
+            <tbody>
+                <tr><td>درخواست خدمات جدید</td><td class="emphasis">{{ report.operations.service_requests|report_number }}</td><td>مشتری جدید</td><td class="emphasis">{{ report.operations.new_customers|report_number }}</td></tr>
+                <tr><td>خودروی ثبت‌شده جدید</td><td>{{ report.operations.new_vehicles|report_number }}</td><td>پذیرش تعمیر جدید در دوره</td><td class="emphasis">{{ report.operations.repairs|report_number }}</td></tr>
+                <tr><td>تعمیرات فعال در دوره (پذیرش یا تحویل)</td><td>{{ report.operations.repairs_active|report_number }}</td><td>تعمیرات تحویل‌شده در دوره</td><td>{{ report.operations.delivered_repairs|report_number }}</td></tr><tr><td>تعمیرات باز در پایان دوره</td><td>{{ report.operations.open_repairs_as_of_end|report_number }}</td><td>گزارش‌های فعالیت تعمیرکار</td><td>{{ report.operations.legacy_activity_records|report_number }}</td></tr>
+                <tr><td>مراجعات ثبت‌شده</td><td>{{ report.operations.customer_visits|report_number }}</td><td>ردیف خدمات/قطعات ثبت‌شده در دوره</td><td>{{ report.operations.repair_service_lines|add:report.operations.repair_part_lines|report_number }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">03</span><strong>نکات قابل توجه این دوره</strong></div>
+        <div class="insight-grid">
+            {% for insight in report.insights %}
+            <div class="insight"><strong>{{ insight.title }}</strong><span>{{ insight.text }}</span></div>
+            {% empty %}
+            <div class="empty-line">برای استخراج نکات مدیریتی، داده کافی در منابع این دوره ثبت نشده است.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · گزارش داخلی مدیریتی</span><span>صفحه ۱ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>روند درآمد، هزینه و خالص جریان مالی</p></div></div>
+        <div class="report-headline"><span>روند دوره · صفحه تفصیلی</span><strong>{{ report_title }}</strong></div>
+    </header>
+    <div class="report-meta">
+        <div class="meta-item"><span>شروع دوره</span><strong>{{ report.period_start|jalali_date }}</strong></div>
+        <div class="meta-item"><span>پایان دوره</span><strong>{{ report.period_end|jalali_date }}</strong></div>
+        <div class="meta-item"><span>نوع گزارش</span><strong>{% if report_type == "yearly" %}سالانه{% else %}ماهانه{% endif %}</strong></div>
+        <div class="meta-item"><span>واحد نمودار</span><strong>تومان (مقیاس فشرده)</strong></div>
+    </div>
+    <div class="section">
+        <div class="section-head"><span class="section-num">04</span><strong>روند دوره</strong><small>دریافتی و هزینه‌های ثبت‌شده؛ مقیاس اعداد روی محور و برچسب‌ها مشخص است</small></div>
+        <div class="report-chart">{{ report.chart_svgs.cashflow }}</div>
+    </div>
+    <div class="kpi-grid">
+        <div class="kpi primary"><span>کل دریافتی ثبت‌شده</span><strong>{{ report.financial.cash_income|report_money }}</strong><em>وصول فاکتور + درآمد روزانه</em></div>
+        <div class="kpi"><span>خروج نقدی ثبت‌شده</span><strong>{{ report.financial.cash_outflow|report_money }}</strong><em>هزینه روزانه + حقوق پرداختی</em></div>
+        <div class="kpi primary"><span>خالص جریان نقدی</span><strong>{{ report.financial.cash_surplus|report_money }}</strong><em>دریافتی منهای خروجی شناخته‌شده</em></div>
+        <div class="kpi"><span>هزینه قطعات شناخته‌شده/برآوردی</span><strong>{{ report.financial.parts_cost|report_money }}</strong><em>به‌دلیل نبود تاریخ خرید مستقل، در نمودار جریان نقدی منظور نشده</em></div>
+    </div>
+    <div class="subheading">جدول اعداد پشت نمودار</div>
+    <table class="report-table">
+        <thead><tr><th>بازه</th><th>دریافتی و درآمد ثبت‌شده</th><th>هزینه + حقوق پرداختی</th><th>خالص جریان نقدی</th></tr></thead>
+        <tbody>
+        {% if report_type == "yearly" %}
+            {% for row in report.charts.monthly_cashflow %}<tr><td>{{ row.label }}</td><td>{{ row.income|report_money }}</td><td>{{ row.expense|report_money }}</td><td class="emphasis">{{ row.net|report_money }}</td></tr>{% empty %}<tr><td colspan="4" class="empty-line">داده مالی ماهانه‌ای برای این دوره ثبت نشده است.</td></tr>{% endfor %}
+        {% else %}
+            {% for row in report.charts.weekly_cashflow %}<tr><td>{{ row.label }}</td><td>{{ row.income|report_money }}</td><td>{{ row.expense|report_money }}</td><td class="emphasis">{{ row.net|report_money }}</td></tr>{% empty %}<tr><td colspan="4" class="empty-line">داده مالی بازه‌ای برای این دوره ثبت نشده است.</td></tr>{% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    <div class="note warning"><strong>تفسیر نمودار:</strong> جریان نقدی فقط دریافتی‌های ثبت‌شده از فاکتورها و درآمدهای روزانه را با هزینه‌های روزانه و حقوق پرداخت‌شده مقایسه می‌کند. هزینه قطعات به علت نبود تاریخ مستقل خرید/پرداخت در خالص نقدی وارد نشده است؛ آن رقم جداگانه در بالا برای شفافیت نشان داده می‌شود.</div>
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · اعداد دوره در جدول زیر نمودار</span><span>صفحه ۲ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>تحلیل مالی و وصول مطالبات</p></div></div>
+        <div class="report-headline"><span>تحلیل مالی</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">05</span><strong>ترکیب درآمد</strong><small>تفکیک درآمد فاکتور و درآمدهای دیگر</small></div>
+        <div class="report-chart">{{ report.chart_svgs.revenue_mix }}</div>
+        <table class="report-table"><thead><tr><th>منبع درآمد</th><th>مبلغ</th><th>تعداد ردیف</th><th>مقدار/تعداد ثبت‌شده</th></tr></thead><tbody>
+            {% for row in report.financial.revenue_by_type %}<tr><td class="text">{{ row.label }}</td><td>{{ row.value|report_money }}</td><td>{{ row.count|report_number }}</td><td>{{ row.quantity|default:"—"|report_number }}</td></tr>{% endfor %}
+            {% if report.financial.other_income %}<tr><td class="text">سایر درآمدهای ثبت‌شده</td><td>{{ report.financial.other_income|report_money }}</td><td>{{ report.financial.other_income_count|report_number }}</td><td>—</td></tr>{% endif %}
+            {% if not report.financial.revenue_by_type and not report.financial.other_income %}<tr><td colspan="4" class="empty-line">در این دوره درآمد فاکتورشده یا درآمد روزانه ثبت نشده است.</td></tr>{% endif %}
+        </tbody></table>
+    </div>
+
+    <div class="two-col section">
+        <div><div class="section-head"><span class="section-num">06</span><strong>خالص جریان نقدی ثبت‌شده</strong></div><div class="report-chart">{{ report.chart_svgs.net }}</div></div>
+        <div><div class="section-head"><span class="section-num">07</span><strong>وضعیت فاکتورها</strong></div>
+            <table class="report-table"><thead><tr><th>وضعیت پرداخت</th><th>تعداد</th></tr></thead><tbody>
+                <tr><td>تسویه‌شده</td><td>{{ report.invoices.status.paid|report_number }}</td></tr>
+                <tr><td>پرداخت ناقص</td><td>{{ report.invoices.status.partial|report_number }}</td></tr>
+                <tr><td>پرداخت‌نشده</td><td>{{ report.invoices.status.pending|report_number }}</td></tr>
+                <tr><td>بدون ردیف مالی / مبلغ صفر</td><td>{{ report.invoices.status.empty|report_number }}</td></tr>
+                <tr><td class="emphasis">جمع فاکتورها</td><td class="emphasis">{{ report.invoices.count|report_number }}</td></tr>
+            </tbody></table>
+            <div class="note">این وضعیت مربوط به فاکتورهای صادرشده در همین دوره است. مطالبات صفحه نخست به مانده همه فاکتورهای صادرشده تا پایان دوره نگاه می‌کند.</div>
+        </div>
+    </div>
+
+    <div class="two-col section">
+        <div><div class="section-head"><span class="section-num">08</span><strong>روش‌های دریافت وجه</strong></div>
+            <table class="report-table"><thead><tr><th>روش پرداخت</th><th>تعداد</th><th>مبلغ</th></tr></thead><tbody>
+                {% for row in report.financial.payment_methods %}<tr><td class="text">{{ row.label }}</td><td>{{ row.count|report_number }}</td><td>{{ row.amount|report_money }}</td></tr>{% empty %}<tr><td colspan="3" class="empty-line">در این دوره پرداختی ثبت نشده است.</td></tr>{% endfor %}
+            </tbody></table>
+        </div>
+        <div><div class="section-head"><span class="section-num">09</span><strong>بیشترین هزینه‌های ثبت‌شده</strong></div><div class="report-chart">{{ report.chart_svgs.expenses }}</div></div>
+    </div>
+
+    <div class="note"><strong>مبنای محاسبه:</strong> جریان نقدی فقط دریافت‌های ثبت‌شده از فاکتورها و درآمدهای روزانه را در برابر هزینه‌های روزانه و حقوق پرداخت‌شده قرار می‌دهد. چون در مدل قطعات، تاریخ مستقل پرداخت خرید ثبت نشده، خرید قطعه به‌عنوان خروج نقدی قطعی در این نمودار لحاظ نشده است.</div>
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · مبالغ به تومان</span><span>صفحه ۳ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>تحلیل خدمات و درآمد خدمات</p></div></div>
+        <div class="report-headline"><span>عملکرد عملیاتی · خدمات</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">10</span><strong>پرتکرارترین خدمات</strong><small>بر اساس ردیف‌های فاکتور این دوره و خدمات تعمیرات پذیرفته/تحویل‌شده در بازه</small></div>
+        <div class="report-chart">{{ report.chart_svgs.services }}</div>
+        <table class="report-table"><thead><tr><th>خدمت</th><th>تعداد/مقدار</th><th>درآمد ثبت‌شده</th><th>منبع داده</th></tr></thead><tbody>
+            {% for row in report.top_services %}<tr><td class="text">{{ row.service }}</td><td>{{ row.count|report_number }}</td><td>{{ row.amount|report_money }}</td><td>{{ row.source|default:"—" }}</td></tr>{% empty %}<tr><td colspan="4" class="empty-line">خدمتی برای این دوره ثبت نشده است.</td></tr>{% endfor %}
+        </tbody></table>
+    </div>
+
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · تحلیل خدمات ثبت‌شده</span><span>صفحه ۴ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>خودروهای تحت سرویس و تعمیر</p></div></div>
+        <div class="report-headline"><span>عملکرد عملیاتی · خودروها</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">11</span><strong>خودروهای پرتکرار</strong><small>بر اساس پذیرش/تحویل تعمیر، فعالیت مرتبط و در نبود کار ثبت‌شده بر اساس مراجعه</small></div>
+        <div class="report-chart">{{ report.chart_svgs.vehicles }}</div>
+        <table class="report-table"><thead><tr><th>شرکت / برند / مدل</th><th>تعداد تعمیر</th><th>فعالیت گزارش‌شده</th><th>مراجعه</th><th>فاکتور</th><th>مبلغ فاکتور</th></tr></thead><tbody>
+            {% for row in report.vehicles %}<tr><td class="text">{{ row.vehicle }}</td><td>{{ row.repair_count|report_number }}</td><td>{{ row.activity_count|report_number }}</td><td>{{ row.visit_count|report_number }}</td><td>{{ row.invoice_count|report_number }}</td><td>{{ row.invoiced_revenue|report_money }}</td></tr>{% empty %}<tr><td colspan="6" class="empty-line">در این بازه تعمیر، فعالیت یا مراجعه قابل انتساب به خودرو ثبت نشده است.</td></tr>{% endfor %}
+        </tbody></table>
+    </div>
+
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · گروه‌بندی بر اساس اطلاعات ثبت‌شده خودرو</span><span>صفحه ۵ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>تحلیل مشتریان و عملکرد پرسنل</p></div></div>
+        <div class="report-headline"><span>مشتریان و پرسنل</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">12</span><strong>مشتریان پرتکرار</strong><small>در صورت خالی بودن دفتر مراجعات، رتبه بر اساس تعداد تعمیرات ثبت‌شده است</small></div>
+        <div class="report-chart">{{ report.chart_svgs.customers }}</div>
+        <table class="report-table"><thead><tr><th>مشتری</th><th>مراجعه</th><th>تعمیر مرتبط</th><th>فعالیت مستقل</th><th>فاکتور</th><th>مبلغ فاکتور</th><th>وصولی فاکتور</th></tr></thead><tbody>
+            {% for row in report.top_customers %}<tr><td class="text">{{ row.customer }}</td><td>{{ row.visit_count|report_number }}</td><td>{{ row.repair_count|report_number }}</td><td>{{ row.activity_count|report_number }}</td><td>{{ row.invoice_count|report_number }}</td><td>{{ row.amount|report_money }}</td><td>{{ row.paid_amount|report_money }}</td></tr>{% empty %}<tr><td colspan="7" class="empty-line">مشتری‌ای در فعالیت‌های این دوره ثبت نشده است.</td></tr>{% endfor %}
+        </tbody></table>
+        {% if report.top_customers.0.frequency_basis %}<div class="note">مبنای رتبه‌بندی مشتری: {{ report.top_customers.0.frequency_basis }}.</div>{% endif %}
+    </div>
+
+    <div class="two-col section">
+        <div><div class="section-head"><span class="section-num">13</span><strong>اجرت فاکتورشده به نام تعمیرکار</strong></div><div class="report-chart">{{ report.chart_svgs.mechanics }}</div></div>
+        <div><div class="section-head"><span class="section-num">14</span><strong>ساعات حضور ثبت‌شده</strong></div><div class="report-chart">{{ report.chart_svgs.mechanic_hours }}</div></div>
+    </div>
+
+    <div class="note warning"><strong>تفسیر بهره‌وری:</strong> مبلغ اجرت به تعمیرکار فقط زمانی قابل انتساب است که تعمیرکار روی خدمت فاکتور یا تعمیر ثبت شده باشد. نسبت اجرت به ساعت حضور شاخص مقایسه‌ای است و به‌تنهایی سود خالص، کیفیت تعمیر، پیچیدگی کار یا رضایت مشتری را اندازه نمی‌گیرد.</div>
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · تحلیل پرسنل</span><span>صفحه ۶ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>ساعات حضور و بهره‌وری عملیاتی</p></div></div>
+        <div class="report-headline"><span>عملکرد پرسنل</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">15</span><strong>تعداد تعمیرات و ساعات حضور</strong><small>تعمیرات متمایز از روی ارتباطات ثبت‌شده جمع شده‌اند</small></div>
+        <table class="report-table"><thead><tr><th>کارمند</th><th>تعمیرات مشارکت‌شده</th><th>روزهای حضور</th><th>ساعات حضور</th><th>میانگین ساعت/روز</th><th>زمان ثبت‌شده تعمیر</th><th>میانگین ورود</th><th>میانگین خروج</th></tr></thead><tbody>
+            {% for row in report.employees %}<tr><td class="text">{{ row.employee }}</td><td>{{ row.repair_count|report_number }}</td><td>{{ row.present_days|report_number }}</td><td>{{ row.attendance_hours|report_number }}</td><td>{{ row.average_daily_hours|default:"—"|report_number }}</td><td>{{ row.recorded_repair_hours|report_number }}</td><td>{{ row.average_check_in|default:"—" }}</td><td>{{ row.average_check_out|default:"—" }}</td></tr>{% empty %}<tr><td colspan="8" class="empty-line">اطلاعات پرسنلی برای این دوره ثبت نشده است.</td></tr>{% endfor %}
+        </tbody></table>
+    </div>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">16</span><strong>اجرت فاکتورشده و مقایسه مالی پرسنل</strong></div>
+        <table class="report-table"><thead><tr><th>کارمند</th><th>اجرت خدمات فاکتور</th><th>حقوق پرداخت‌شده</th><th>اجرت منهای حقوق*</th><th>اجرت به ازای ساعت حضور</th><th>تعمیر به ازای روز حضور</th></tr></thead><tbody>
+            {% for row in report.employees %}<tr><td class="text">{{ row.employee }}</td><td>{{ row.labor_revenue|report_money }}</td><td>{{ row.salary_paid|report_money }}</td><td>{{ row.estimated_contribution_after_salary|report_money }}</td><td>{% if row.labor_revenue_per_attendance_hour|has_value %}{{ row.labor_revenue_per_attendance_hour|report_money }}{% else %}—{% endif %}</td><td>{{ row.repairs_per_present_day|default:"—"|report_number }}</td></tr>{% empty %}<tr><td colspan="6" class="empty-line">اطلاعات مالی پرسنل برای این دوره ثبت نشده است.</td></tr>{% endfor %}
+        </tbody></table>
+        <div class="note warning"><strong>محدودیت تفسیر:</strong> ساعات حضور از زمان ورود و خروج ثبت‌شده محاسبه شده و زمان استراحت از آن کسر نمی‌شود. چون برنامه شیفت استاندارد ثبت نشده، اضافه‌کاری قراردادی قابل محاسبه نیست. «اجرت منهای حقوق» و «اجرت به ازای ساعت حضور» معیارهای مقایسه‌ای‌اند، نه سود خالص یا ارزیابی کامل کیفیت کار.</div>
+    </div>
+
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · تحلیل بهره‌وری پرسنل</span><span>صفحه ۷ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>مصرف قطعات و تحلیل تأمین‌کنندگان</p></div></div>
+        <div class="report-headline"><span>قطعات و خرید</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="two-col section">
+        <div><div class="section-head"><span class="section-num">17</span><strong>قطعات پرتکرار</strong></div><div class="report-chart">{{ report.chart_svgs.parts }}</div></div>
+        <div><div class="section-head"><span class="section-num">18</span><strong>تأمین‌کنندگان بر مبنای خرید ثبت‌شده</strong></div><div class="report-chart">{{ report.chart_svgs.suppliers }}</div></div>
+    </div>
+
+    <div class="two-col section">
+        <div>
+            <div class="section-head"><strong>جزئیات قطعات ثبت‌شده</strong></div>
+            <table class="report-table"><thead><tr><th>نام قطعه</th><th>تعداد</th><th>منبع</th></tr></thead><tbody>
+                {% for row in report.charts.top_parts %}<tr><td class="text">{{ row.part }}</td><td>{{ row.quantity|report_number }}</td><td>{{ row.source|default:"—" }}</td></tr>{% empty %}<tr><td colspan="3" class="empty-line">مصرف قطعه برای این دوره ثبت نشده است.</td></tr>{% endfor %}
+            </tbody></table>
+        </div>
+        <div>
+            <div class="section-head"><strong>جزئیات خرید ثبت‌شده از تأمین‌کنندگان</strong></div>
+            <table class="report-table"><thead><tr><th>تأمین‌کننده</th><th>ردیف</th><th>تعداد</th><th>مبلغ</th></tr></thead><tbody>
+                {% for row in report.inventory.top_suppliers %}<tr><td class="text">{{ row.supplier }}</td><td>{{ row.lines|report_number }}</td><td>{{ row.quantity|report_number }}</td><td>{{ row.amount|report_money }}</td></tr>{% empty %}<tr><td colspan="4" class="empty-line">خرید قطعه به تأمین‌کننده‌ای در این دوره منتسب نشده است.</td></tr>{% endfor %}
+            </tbody></table>
+        </div>
+    </div>
+
+    <div class="note">سوابق «قطعات خریداری‌شده برای تعمیر» در مدل فعلی به تاریخ گزارش فعالیت تعمیرکار متصل است؛ این رتبه‌بندی لزوماً تاریخ واقعی سفارش یا پرداخت به فروشنده را نشان نمی‌دهد. برای گزارش خرید دقیق، به ثبت مستقل سفارش خرید، تاریخ خرید، مبلغ فاکتور فروشنده و پرداخت آن نیاز است.</div>
+    <footer class="report-footer"><span>تعمیرگاه تخصصی کیشانی · تحلیل خرید قطعات</span><span>صفحه ۸ از ۹</span></footer>
+</section>
+
+<section class="report-page">
+    <header class="report-header">
+        <div class="brand"><div class="brand-logo">{% if logo_src %}<img src="{{ logo_src }}" alt="تعمیرگاه کیشانی">{% endif %}</div><div><h1>تعمیرگاه تخصصی کیشانی</h1><p>وضعیت انبار، کیفیت داده و روش محاسبه</p></div></div>
+        <div class="report-headline"><span>انبار و کنترل کیفیت</span><strong>{{ report_title }}</strong></div>
+    </header>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">19</span><strong>وضعیت فعلی انبار</strong><small>این مقادیر snapshot امروزِ زمان تولید گزارش هستند، نه موجودی تاریخی پایان دوره</small></div>
+        <div class="kpi-grid">
+            <div class="kpi"><span>قلم کالای ثبت‌شده</span><strong>{{ report.inventory.part_count|report_number }}</strong></div>
+            <div class="kpi"><span>موجودی کل به تعداد</span><strong>{{ report.inventory.stock_units|report_number }}</strong></div>
+            <div class="kpi"><span>ارزش خرید موجودی فعلی</span><strong>{{ report.inventory.purchase_value|report_money }}</strong></div>
+            <div class="kpi"><span>ارزش فروش موجودی فعلی</span><strong>{{ report.inventory.sale_value|report_money }}</strong></div>
+        </div>
+        <div class="subheading">اقلام کم‌موجودی و زیر حداقل</div>
+        {% if report.inventory.low_stock_parts %}
+        <table class="report-table"><thead><tr><th>قطعه</th><th>موجودی فعلی</th><th>حداقل موجودی</th><th>تأمین‌کننده ثبت‌شده</th></tr></thead><tbody>
+            {% for row in report.inventory.low_stock_parts %}{% if forloop.counter <= 10 %}<tr><td class="text">{{ row.part }}</td><td class="bad">{{ row.stock|report_number }}</td><td>{{ row.minimum_stock|report_number }}</td><td>{{ row.supplier }}</td></tr>{% endif %}{% endfor %}
+        </tbody></table>
+        {% else %}<div class="empty-line">در snapshot فعلی، کالایی پایین‌تر از حداقل موجودی ثبت نشده است.</div>{% endif %}
+    </div>
+
+    <div class="section">
+        <div class="section-head"><span class="section-num">20</span><strong>کیفیت و پوشش داده‌های گزارش</strong></div>
+        <div class="note">این گزارش داده‌های CRM، درخواست خدمات، تعمیرات، فاکتورها و پرداخت‌ها، گزارش فعالیت تعمیرکار، قطعات، انبار، درآمد و هزینه روزانه، حقوق و حضور و غیاب و در صورت وجود لاگ ارتباطات را ترکیب می‌کند.</div>
+        <ul class="data-warning-list">
+            {% for warning in report.data_quality.warnings %}<li>{{ warning }}</li>{% empty %}<li>هشدار مشخصی بر اساس قواعد پایه پوشش داده شناسایی نشد؛ این مورد به معنی حسابرسی کامل داده‌ها نیست.</li>{% endfor %}
+        </ul>
+        <div class="subheading">کنترل پوشش داده‌ها: کل پایگاه داده در برابر همین دوره</div>
+        <table class="report-table">
+            <thead><tr><th>منبع داده</th><th>کل رکوردهای پایگاه داده</th><th>رکوردهای این دوره</th></tr></thead>
+            <tbody>
+                <tr><td class="text">مشتریان</td><td>{{ report.data_quality.source_counts.customers_total|report_number }}</td><td>{{ report.data_quality.source_counts.customers_in_period|report_number }}</td></tr>
+                <tr><td class="text">خودروها</td><td>{{ report.data_quality.source_counts.vehicles_total|report_number }}</td><td>{{ report.data_quality.source_counts.vehicles_in_period|report_number }}</td></tr>
+                <tr><td class="text">درخواست خدمات</td><td>{{ report.data_quality.source_counts.requests_total|report_number }}</td><td>{{ report.data_quality.source_counts.service_requests_in_period|report_number }}</td></tr>
+                <tr><td class="text">تعمیرات (پذیرش)</td><td>{{ report.data_quality.source_counts.repairs_total|report_number }}</td><td>{{ report.data_quality.source_counts.repairs_created_in_period|report_number }}</td></tr>
+                <tr><td class="text">تعمیرات (فعال/تحویل‌شده)</td><td>{{ report.data_quality.source_counts.repairs_total|report_number }}</td><td>{{ report.data_quality.source_counts.repairs_active_in_period|report_number }} / {{ report.data_quality.source_counts.repairs_delivered_in_period|report_number }}</td></tr>
+                <tr><td class="text">ردیف خدمات روی تعمیر</td><td>{{ report.data_quality.source_counts.repair_service_lines_total|report_number }}</td><td>{{ report.data_quality.source_counts.repair_service_lines_in_period|report_number }}</td></tr>
+                <tr><td class="text">ردیف قطعات روی تعمیر</td><td>{{ report.data_quality.source_counts.repair_parts_total|report_number }}</td><td>{{ report.data_quality.source_counts.repair_part_lines_in_period|report_number }}</td></tr>
+                <tr><td class="text">فاکتورها</td><td>{{ report.data_quality.source_counts.invoices_total|report_number }}</td><td>{{ report.data_quality.source_counts.invoices_in_period|report_number }}</td></tr>
+                <tr><td class="text">پرداخت فاکتورها</td><td>{{ report.data_quality.source_counts.payments_total|report_number }}</td><td>{{ report.data_quality.source_counts.payments_in_period|report_number }}</td></tr>
+                <tr><td class="text">گزارش فعالیت تعمیرکار</td><td>{{ report.data_quality.source_counts.audit_logs_total|report_number }}</td><td>{{ report.data_quality.source_counts.legacy_audit_logs_in_period|report_number }}</td></tr>
+                <tr><td class="text">مراجعات مشتری</td><td>{{ report.data_quality.source_counts.visits_total|report_number }}</td><td>{{ report.data_quality.source_counts.customer_visits_in_period|report_number }}</td></tr>
+                <tr><td class="text">حضور و غیاب</td><td>{{ report.data_quality.source_counts.attendance_total|report_number }}</td><td>{{ report.data_quality.source_counts.attendance_rows_in_period|report_number }}</td></tr>
+            </tbody>
+        </table>
+        <div class="note"><strong>پیش‌بینی درآمد:</strong>
+            {% if report_type == "yearly" %}
+                {% if report.ml.next_year_income_prediction|has_value %}برآورد روند درآمد سال بعد: {{ report.ml.next_year_income_prediction|report_money }}؛ بر پایه حداکثر پنج سال داده ثبت‌شده و فقط در صورت وجود دست‌کم سه سال دارای درآمد. این برآورد جایگزین بودجه‌بندی یا پیش‌بینی آماری معتبر نیست.{% else %}برای برآورد سال بعد حداقل سه سال دارای درآمد لازم است؛ داده کافی موجود نیست، بنابراین عددی نمایش داده نمی‌شود.{% endif %}
+            {% else %}
+                {% if report.ml.next_month_income_prediction|has_value %}برآورد روند درآمد ماه بعد: {{ report.ml.next_month_income_prediction|report_money }}؛ فقط در صورت وجود دست‌کم سه ماه دارای درآمد در تاریخچه. این برآورد جایگزین بودجه‌بندی یا پیش‌بینی آماری معتبر نیست.{% else %}به‌دلیل نبود حداقل سه ماه دارای درآمد در تاریخچه، پیش‌بینی نمایش داده نمی‌شود.{% endif %}
+            {% endif %}
+        </div>
+        <div class="note"><strong>روش محاسبه نتیجه عملیاتی:</strong> درآمد فاکتورهای صادرشده به‌علاوه سایر درآمدهای ثبت‌شده، منهای هزینه‌های روزانه، حقوق پرداخت‌شده و هزینه قطعات ثبت‌شده/برآوردی. این مقدار سود حسابرسی‌شده نیست؛ ثبت‌نشدن سربار، حقوق تعهدشده، خرید تاریخی کامل یا بهای تمام‌شده تاریخی قطعات می‌تواند نتیجه را تغییر دهد. وجه وصول‌شده نیز شاخصی جدا از درآمد فاکتورشده است.</div>
+        <div class="note">{{ report.inventory.snapshot_note }} {{ report.inventory.purchase_date_note }}</div>
+    </div>
+
+    <footer class="report-footer"><span>این گزارش براساس snapshot داده‌های ثبت‌شده تولید شده است.</span><span>صفحه ۹ از ۹</span></footer>
+</section>
+
+{% if auto_print %}<script>window.addEventListener("load", function () { setTimeout(function () { window.print(); }, 350); });</script>{% endif %}
+</body>
+</html>

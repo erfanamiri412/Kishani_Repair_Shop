@@ -1,0 +1,524 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html
+    lang="fa"
+    dir="rtl"
+>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        چاپ فاکتور {{ invoice.invoice_number }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'assets/css/invoice-print.css' %}"
+    >
+
+</head>
+
+
+<body class="print-only-page">
+
+
+<main class="invoice-page">
+
+    <header class="invoice-header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+
+                <img
+                    src="{% static 'assets/img/logo01.png' %}"
+                    alt="تعمیرگاه تخصصی کیشانی"
+                >
+
+            </div>
+
+
+            <div class="brand-content">
+
+                <h1>
+                    تعمیرگاه تخصصی کیشانی
+                </h1>
+
+                <p>
+                    مرکز تخصصی تعمیر و نگهداری خودرو
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="invoice-heading">
+
+            <span>
+                فاکتور خدمات
+            </span>
+
+            <strong>
+                {{ invoice.invoice_number }}
+            </strong>
+
+        </div>
+
+    </header>
+
+
+    <section class="invoice-meta">
+
+        <div class="meta-item">
+
+            <span>
+                شماره فاکتور
+            </span>
+
+            <strong>
+                {{ invoice.invoice_number }}
+            </strong>
+
+        </div>
+
+
+        <div class="meta-item">
+
+            <span>
+                کد پیگیری
+            </span>
+
+            <strong>
+                {{ invoice.tracking_code }}
+            </strong>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span>
+                شماره پذیرش
+            </span>
+
+            <strong>
+                {{ invoice.repair_number }}
+            </strong>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span>
+                تاریخ صدور
+            </span>
+
+            <strong>
+                {{ invoice.issued_at|date:"Y/m/d" }}
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+    <section class="customer-card">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                01
+            </span>
+
+            <div>
+
+                <strong>
+                    اطلاعات مشتری و خودرو
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="customer-grid">
+
+            <div class="customer-field">
+
+                <span>
+                    نام مشتری
+                </span>
+
+                <strong>
+                    {{ invoice.customer.full_name }}
+                </strong>
+
+            </div>
+
+
+
+            <div class="customer-field">
+
+                <span>
+                    خودرو
+                </span>
+
+                <strong>
+                    {{ invoice.vehicle.brand }}
+                </strong>
+
+            </div>
+
+
+
+        </div>
+
+    </section>
+
+
+    {% for category, items in grouped_items %}
+
+        <section class="items-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    {{ forloop.counter|add:"1"|stringformat:"02d" }}
+                </span>
+
+                <div>
+
+                    <strong>
+                        {{ category }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <table class="items-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="index">
+                            #
+                        </th>
+
+                        <th>
+                            شرح
+                        </th>
+
+                        <th class="quantity">
+                            تعداد
+                        </th>
+
+                        <th class="price">
+                            قیمت واحد
+                        </th>
+
+                        <th class="price">
+                            مبلغ
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in items %}
+
+                        <tr>
+
+                            <td class="index">
+                                {{ forloop.counter }}
+                            </td>
+
+                            <td>
+
+                                <strong>
+                                    {{ item.title }}
+                                </strong>
+
+                                {% if item.description %}
+
+                                    <small>
+                                        {{ item.description }}
+                                    </small>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td class="quantity">
+                                {{ item.quantity }}
+                            </td>
+
+
+                            <td class="price">
+
+                                {{ item.unit_price|floatformat:0 }}
+
+                                تومان
+
+                            </td>
+
+
+                            <td class="price total">
+
+                                {{ item.total_price|floatformat:0 }}
+
+                                تومان
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    {% endfor %}
+
+
+    <section class="financial-section">
+
+        <div class="financial-breakdown">
+
+            <div class="financial-row">
+
+                <span>
+                    خدمات تعمیرگاه
+                </span>
+
+                <strong>
+                    {{ invoice.labor_total|floatformat:0 }}
+                    تومان
+                </strong>
+
+            </div>
+
+
+            <div class="financial-row">
+
+                <span>
+                    لوازم و قطعات
+                </span>
+
+                <strong>
+                    {{ invoice.parts_total|floatformat:0 }}
+                    تومان
+                </strong>
+
+            </div>
+
+
+            <div class="financial-row">
+
+                <span>
+                    تراشکاری
+                </span>
+
+                <strong>
+                    {{ invoice.machining_total|floatformat:0 }}
+                    تومان
+                </strong>
+
+            </div>
+
+
+            <div class="financial-row grand-total">
+
+                <span>
+                    مبلغ کل
+                </span>
+
+                <strong>
+                    {{ invoice.total_amount|floatformat:0 }}
+                    تومان
+                </strong>
+
+            </div>
+
+
+            <div class="financial-row paid">
+
+                <span>
+                    پرداخت شده
+                </span>
+
+                <strong>
+                    {{ invoice.paid_amount|floatformat:0 }}
+                    تومان
+                </strong>
+
+            </div>
+
+
+            <div class="financial-row remaining">
+
+                <span>
+                    مانده حساب
+                </span>
+
+                <strong>
+                    {{ invoice.remaining_amount|floatformat:0 }}
+                    تومان
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="payment-status">
+
+            <span>
+                وضعیت پرداخت
+            </span>
+
+            <strong>
+                {{ invoice.payment_status }}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    {% if invoice.description %}
+
+        <section class="description-box">
+
+            <div class="description-title">
+                توضیحات
+            </div>
+
+            <div class="description-content">
+                {{ invoice.description|linebreaksbr }}
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+    <footer class="invoice-footer">
+
+        <div class="contact-info">
+
+            <strong>
+                تعمیرگاه تخصصی کیشانی
+            </strong>
+
+            <span>
+                تهران، مجیدیه شمالی، بزرگراه رسالت،
+                خیابان لاهیجانی شرقی، پلاک ۱۰۱
+            </span>
+
+            <span>
+                تلفن همراه: ۰۹۱۲۳۵۳۰۴۲۳
+            </span>
+
+            <span>
+                تلفن ثابت: ۲۲۵۰۰۲۱۳
+            </span>
+
+        </div>
+
+
+        <div class="signature">
+
+            مهر و امضاء تعمیرگاه
+
+            <span></span>
+
+        </div>
+
+    </footer>
+
+
+    <div class="invoice-note">
+
+        این فاکتور به صورت سیستمی صادر شده و دارای کد پیگیری معتبر است.
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     AUTO PRINT
+====================================================== -->
+
+<script>
+
+    /*
+     * وقتی نسخه چاپی در تب جدید باز شد،
+     * بعد از Render شدن کامل فاکتور،
+     * پنجره چاپ سیستم را باز می‌کنیم.
+     */
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            setTimeout(
+                function () {
+
+                    window.print();
+
+                },
+                400
+            );
+
+        }
+    );
+
+
+    /*
+     * بعد از پایان عملیات چاپ،
+     * تب چاپ بسته می‌شود.
+     */
+
+    window.addEventListener(
+        "afterprint",
+        function () {
+
+            setTimeout(
+                function () {
+
+                    window.close();
+
+                },
+                300
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

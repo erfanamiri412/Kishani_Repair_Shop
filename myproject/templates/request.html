@@ -1,0 +1,805 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+سرویس دهی آنلاین در تعمیرگاه کیشانی
+{% endblock title %}
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/img-9.jpg);">
+      <div class="container position-relative">
+        <h1>سرویس‌دهی آنلاین</h1>
+        <p class="about-description">جهت رزرو نوبت و هماهنگی خدمات، لطفا نوع خودرو و کارهای درخواستی خود را در فرم زیر وارد کنید. پس از ثبت اطلاعات، همکاران ما در صورت نیاز با شما تماس می‌گیرند و زمان انجام خدمات را با شما هماهنگ می‌کنند.</p>
+        <nav class="breadcrumbs">
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Service Request Section -->
+    <br>
+    <section id="service-request" class="service-request-section">
+
+        <div class="container">
+
+            <!-- Header -->
+            <div class="service-request-header">
+
+                <h2>
+                    ثبت درخواست خدمات
+                </h2>
+
+                <p class="about-description">
+                    اطلاعات خودرو و مشکل خود را وارد کنید.
+                    کارشناسان ما در اولین فرصت با شما تماس می‌گیرند.
+                </p>
+
+            </div>
+
+
+            <!-- Form Card -->
+            <div class="service-request-card">
+
+                <form
+                    action="{% url 'service_request' %}"
+                    method="post"
+                    enctype="multipart/form-data"
+                    id="service-request-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- =====================================
+                        SECTION 01
+                    ====================================== -->
+
+                    <div class="request-section">
+
+                        <div class="request-section-title">
+
+                            <span class="section-number">
+                                <img
+                                    src="{% static 'assets/img/icon-5.svg' %}"
+                                    alt="اطلاعات تماس"
+                                    class="contact-info-icon"
+                                >
+                            </span>
+
+                            <div>
+                                <h3>اطلاعات تماس</h3>
+
+                                <p>
+                                    مشخصات خود را وارد کنید
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row g-3">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+
+                                <div class="request-field">
+
+                                    <label for="name">
+                                        نام و نام خانوادگی
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="full_name"
+                                        name="full_name"
+                                        class="form-control"
+                                        value="{{ form.full_name.value|default_if_none:'' }}"
+                                        placeholder="مثلاً علی کیشانی"
+                                        required
+                                    >
+
+                                    {% if form.full_name.errors %}
+                                        <div class="field-error">
+                                            {{ form.full_name.errors.0 }}
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-6">
+
+                                <div class="request-field">
+
+                                    <label for="phone">
+                                        شماره تماس
+                                    </label>
+
+                                    <input
+                                        type="tel"
+                                        dir="rtl"
+                                        id="phone"
+                                        name="phone"
+                                        class="form-control"
+                                        value="{{ form.phone.value|default_if_none:'' }}"
+                                        placeholder="مثلاً ۰۹۱۲۱۲۳۴۵۶۷"
+                                        inputmode="tel"
+                                        maxlength="11"
+                                        required
+                                    >
+
+                                    {% if form.phone.errors %}
+                                        <div class="field-error">
+                                            {{ form.phone.errors.0 }}
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Divider -->
+                    <div class="request-divider"></div>
+
+                    <!-- =====================================
+                        SECTION 02
+                    ====================================== -->
+
+                    <div class="request-section">
+
+                        <div class="request-section-title">
+
+                            <span class="section-number">
+                                <img
+                                    src="{% static 'assets/img/icon-6.svg' %}"
+                                    alt="اطلاعات خودرو"
+                                    class="contact-info-icon"
+                                >
+                            </span>
+
+                            <div>
+                                <h3>اطلاعات خودرو</h3>
+
+                                <p>
+                                    مشخصات خودروی خود را وارد کنید
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row g-3">
+
+
+                            <!-- Brand -->
+                            <div class="col-md-6">
+
+                                <div class="request-field">
+                                    
+                                    <label for="vehicle_brand">
+                                        برند خودرو
+                                    </label>
+                                    
+                                <input
+                                    type="text"
+                                    id="vehicle_brand"
+                                    name="vehicle_brand"
+                                    class="form-control"
+                                    value="{{ form.vehicle_brand.value|default_if_none:'' }}"
+                                    placeholder="مثلاً ایران‌خودرو"
+                                    required
+                                >
+
+                                {% if form.vehicle_brand.errors %}
+                                    <div class="field-error">
+                                        {{ form.vehicle_brand.errors.0 }}
+                                    </div>
+                                {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Model -->
+                            <div class="col-md-6">
+
+                                <div class="request-field">
+
+                                    <label for="vehicle_model">
+                                        مدل خودرو
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="vehicle_model"
+                                        name="vehicle_model"
+                                        class="form-control"
+                                        value="{{ form.vehicle_model.value|default_if_none:'' }}"
+                                        placeholder="مثلاً دنا پلاس"
+                                        required
+                                    >
+
+                                    {% if form.vehicle_model.errors %}
+                                        <div class="field-error">
+                                            {{ form.vehicle_model.errors.0 }}
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Year -->
+                            <div class="col-md-6">
+
+                                <div class="request-field">
+
+                                    <label for="vehicle_year">
+                                        سال ساخت
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="vehicle_year"
+                                        name="vehicle_year"
+                                        class="form-control"
+                                        value="{{ form.vehicle_year.value|default_if_none:'' }}"
+                                        placeholder="مثلاً ۱۴۰۰"
+                                        inputmode="numeric"
+                                        maxlength="4"
+                                    >
+
+                                    {% if form.vehicle_year.errors %}
+                                        <div class="field-error">
+                                            {{ form.vehicle_year.errors.0 }}
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                    <!-- Plate -->
+                    <div class="col-md-6">
+
+                        <div class="request-field">
+
+                            <label for="plate-city">
+                                شماره پلاک
+                            </label>
+
+
+                            <div class="custom-iran-plate">
+
+
+                                <!-- =========================================
+                                    BLUE IRAN SECTION
+                                ========================================== -->
+
+                                <div class="custom-iran-plate__blue">
+
+                                    <div class="custom-iran-plate__flag">
+
+                                        <span class="custom-iran-plate__flag-symbol">
+                                            ✦
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="custom-iran-plate__country">
+
+                                        <span>
+                                            I.R.
+                                        </span>
+
+                                        <span>
+                                            IRAN
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- =========================================
+                                    MAIN PLATE NUMBERS
+                                ========================================== -->
+
+                                <div class="custom-iran-plate__numbers">
+
+
+                                    <!-- =====================================
+                                        دو رقم اول
+                                    ====================================== -->
+
+                                    <div class="custom-iran-plate__field field-city">
+
+                                        <input
+                                            id="plate-city"
+                                            type="text"
+                                            name="plate_city"
+                                            maxlength="2"
+                                            inputmode="numeric"
+                                            autocomplete="off"
+                                            class="plate-input"
+                                            value="{{ form.plate_city.value|default_if_none:'' }}"
+                                            placeholder="XX"
+                                            aria-label="دو رقم اول پلاک"
+                                        >
+
+                                    </div>
+
+
+                                    <!-- =====================================
+                                        حرف پلاک
+                                    ====================================== -->
+
+                                    <div class="custom-iran-plate__field field-letter">
+
+                                        <input
+                                            id="plate-letter"
+                                            type="text"
+                                            name="plate_letter"
+                                            maxlength="1"
+                                            autocomplete="off"
+                                            class="plate-input"
+                                            value="{{ form.plate_letter.value|default_if_none:'' }}"
+                                            placeholder="X"
+                                            aria-label="حرف پلاک"
+                                        >
+
+                                    </div>
+
+
+                                    <!-- =====================================
+                                        سه رقم
+                                    ====================================== -->
+
+                                    <div class="custom-iran-plate__field field-middle">
+
+                                        <input
+                                            id="plate-middle"
+                                            type="text"
+                                            name="plate_middle"
+                                            maxlength="3"
+                                            inputmode="numeric"
+                                            autocomplete="off"
+                                            class="plate-input"
+                                            value="{{ form.plate_middle.value|default_if_none:'' }}"
+                                            placeholder="XXX"
+                                            aria-label="سه رقم پلاک"
+                                        >
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <!-- =========================================
+                                    IRAN CODE SECTION
+                                ========================================== -->
+
+                                <div class="custom-iran-plate__iran">
+
+
+                                    <span class="custom-iran-plate__iran-title">
+                                        ایران
+                                    </span>
+
+
+                                    <input
+                                        id="plate-right"
+                                        type="text"
+                                        name="plate_right"
+                                        maxlength="2"
+                                        inputmode="numeric"
+                                        autocomplete="off"
+                                        class="plate-input custom-iran-plate__iran-code"
+                                        value="{{ form.plate_right.value|default_if_none:'' }}"
+                                        placeholder="XX"
+                                        aria-label="کد دو رقمی ایران"
+                                    >
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- =========================================
+                                PLATE ERROR
+                            ========================================== -->
+
+                            {% if form.plate_city.errors %}
+
+                                <div class="field-error">
+                                    {{ form.plate_city.errors.0 }}
+                                </div>
+
+                            {% elif form.plate_letter.errors %}
+
+                                <div class="field-error">
+                                    {{ form.plate_letter.errors.0 }}
+                                </div>
+
+                            {% elif form.plate_middle.errors %}
+
+                                <div class="field-error">
+                                    {{ form.plate_middle.errors.0 }}
+                                </div>
+
+                            {% elif form.plate_right.errors %}
+
+                                <div class="field-error">
+                                    {{ form.plate_right.errors.0 }}
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="request-divider"></div>
+
+                    <div class="request-section">
+
+
+                        <!-- =====================================
+                            Section Title
+                        ====================================== -->
+
+                        <div class="request-section-title">
+
+                            <span class="section-number">
+
+                                <img
+                                    src="{% static 'assets/img/icon-7.svg' %}"
+                                    alt="اطلاعات سرویس"
+                                    class="contact-info-icon"
+                                >
+
+                            </span>
+
+
+                            <div>
+
+                                <h3>
+                                    درخواست شما
+                                </h3>
+
+                                <p>
+                                    نوع خدمت و مشکل خودرو را مشخص کنید
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =====================================
+                            Service Type
+                        ====================================== -->
+
+                        <div class="request-field">
+
+                            <label>
+                                نوع خدمت
+                            </label>
+
+
+                            <div class="service-type-grid">
+
+
+                                <!-- =================================
+                                    Diagnostic
+                                ================================== -->
+
+                                <label class="service-option">
+
+                                    <input
+                                        type="radio"
+                                        name="service_type"
+                                        value="diagnostic"
+
+                                        {% if form.service_type.value == "diagnostic" %}
+                                            checked
+                                        {% endif %}
+
+                                        required
+                                    >
+
+
+                                    <span class="service-option-content">
+
+                                        <span class="service-icon">
+                                            ⌕
+                                        </span>
+
+                                        <span>
+                                            عیب‌یابی
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+
+                                <!-- =================================
+                                    Periodic Service
+                                ================================== -->
+
+                                <label class="service-option">
+
+                                    <input
+                                        type="radio"
+                                        name="service_type"
+                                        value="periodic_service"
+
+                                        {% if form.service_type.value == "periodic_service" %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+
+                                    <span class="service-option-content">
+
+                                        <span class="service-icon">
+                                            ⚙
+                                        </span>
+
+                                        <span>
+                                            سرویس دوره‌ای
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+
+                                <!-- =================================
+                                    Engine Tuning
+                                ================================== -->
+
+                                <label class="service-option">
+
+                                    <input
+                                        type="radio"
+                                        name="service_type"
+                                        value="engine_tuning"
+
+                                        {% if form.service_type.value == "engine_tuning" %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+
+                                    <span class="service-option-content">
+
+                                        <span class="service-icon">
+                                            ≋
+                                        </span>
+
+                                        <span>
+                                            تنظیم موتور
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+
+                                <!-- =================================
+                                    Engine Repair
+                                ================================== -->
+
+                                <label class="service-option">
+
+                                    <input
+                                        type="radio"
+                                        name="service_type"
+                                        value="engine_repair"
+
+                                        {% if form.service_type.value == "engine_repair" %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+
+                                    <span class="service-option-content">
+
+                                        <span class="service-icon">
+                                            ⚒
+                                        </span>
+
+                                        <span>
+                                            تعمیر موتور
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+
+                                <!-- =================================
+                                    Clutch
+                                ================================== -->
+
+                                <label class="service-option">
+
+                                    <input
+                                        type="radio"
+                                        name="service_type"
+                                        value="clutch"
+
+                                        {% if form.service_type.value == "clutch" %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+
+                                    <span class="service-option-content">
+
+                                        <span class="service-icon">
+                                            ◈
+                                        </span>
+
+                                        <span>
+                                            کیت کلاچ
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+
+                                <!-- =================================
+                                    Other
+                                ================================== -->
+
+                                <label class="service-option">
+
+                                    <input
+                                        type="radio"
+                                        name="service_type"
+                                        value="other"
+
+                                        {% if form.service_type.value == "other" %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+
+                                    <span class="service-option-content">
+
+                                        <span class="service-icon">
+                                            +
+                                        </span>
+
+                                        <span>
+                                            سایر
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+
+                            </div>
+
+
+                            <!-- Service Type Error -->
+
+                            {% if form.service_type.errors %}
+
+                                <div class="field-error">
+                                    {{ form.service_type.errors.0 }}
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <!-- =====================================
+                            Problem Description
+                        ====================================== -->
+
+                        <div class="request-field request-description">
+
+                            <label for="problem_description">
+                                شرح مشکل
+                            </label>
+
+
+                            <textarea
+                                id="problem_description"
+                                name="problem_description"
+                                class="form-control"
+                                rows="5"
+                                placeholder="مثلاً هنگام روشن کردن خودرو صدای غیرعادی از موتور شنیده می‌شود..."
+                                required
+                            >{{ form.problem_description.value|default_if_none:'' }}</textarea>
+
+
+                            {% if form.problem_description.errors %}
+
+                                <div class="field-error">
+                                    {{ form.problem_description.errors.0 }}
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <!-- =====================================
+                            Honeypot
+                        ====================================== -->
+
+                        <div style="display:none;">
+
+                            <input
+                                type="text"
+                                name="website"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="request-submit">
+
+
+                        <button
+                            type="submit"
+                            class="request-submit-btn"
+                        >
+
+                            <span>
+                                ثبت درخواست خدمات
+                            </span>
+
+
+                            <span class="submit-arrow">
+                                ←
+                            </span>
+
+                        </button>
+
+
+                        <p class="about-description">
+                            اطلاعات شما نزد ما محفوظ خواهد بود.
+                        </p>
+
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+    <br>
+    <!-- /Service Request Section -->
+{% endblock content %}

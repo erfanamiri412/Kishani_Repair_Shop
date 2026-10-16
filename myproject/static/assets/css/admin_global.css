@@ -1,0 +1,304 @@
+/* =========================================================
+   Django Admin - Global Layout
+========================================================= */
+
+#content,
+#content-main {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#content-main {
+    float: none !important;
+}
+
+/* جلوگیری از کوچک شدن ناخواسته بخش‌های داخلی */
+#content-main .module,
+#content-main .results,
+#content-main .inline-group {
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   Admin Dashboard
+========================================================= */
+
+body.dashboard #content-related,
+body.dashboard #recent-actions-module {
+    display: none !important;
+}
+
+body.dashboard #content-main .module {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body.dashboard #content-main .module table {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   Changelist - All Admin List Pages
+========================================================= */
+
+#changelist {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* حذف فضای فیلترهای کناری */
+#changelist-filter {
+    display: none !important;
+}
+
+#changelist .changelist-form-container {
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#changelist #changelist-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* ناحیه پیمایش افقی فهرست‌ها */
+#changelist .results {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box !important;
+}
+
+/* عرض جدول متناسب با محتوا؛ با حفظ حداقل عرض والد */
+#changelist #result_list {
+    width: max-content !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    table-layout: auto !important;
+    box-sizing: border-box !important;
+}
+
+/* جلوگیری از شکستن متن سربرگ و سلول‌ها */
+#result_list th,
+#result_list td {
+    white-space: nowrap !important;
+    vertical-align: middle;
+}
+
+/* =========================================================
+   Inline Forms - Main Container
+========================================================= */
+
+#content-main .inline-group {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/*
+   ناحیه پیمایش اینلاین باید به اندازه فضای صفحه باشد.
+   جدول و تیتر داخل آن می‌توانند عریض‌تر باشند.
+*/
+
+#content-main .inline-group .tabular.inline-related {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   Inline - Fieldset Width
+========================================================= */
+
+/*
+   نکته مهم:
+   fieldset باید عرض جدول را دنبال کند.
+   روی آن width: 100% قرار نمی‌دهیم؛
+   چون جدول ممکن است از عرض صفحه عریض‌تر باشد.
+*/
+
+#content-main .inline-group
+.tabular.inline-related fieldset.module {
+    display: block !important;
+    width: max-content !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   Inline - Blue Heading
+========================================================= */
+
+/*
+   تیتر آبی داخل همان fieldset قرار دارد.
+   بنابراین با عرض fieldset و جدول هماهنگ می‌شود.
+*/
+
+#content-main .inline-group
+.tabular.inline-related fieldset.module > h2 {
+    display: block !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+}
+
+/* سازگاری با تیترهایی که مستقیماً داخل inline-group هستند */
+#content-main .inline-group > h2 {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   Inline - Table Width
+========================================================= */
+
+/*
+   جدول حداقل عرض والد را می‌گیرد.
+   در صفحه کوچک، حداقل عرض جدول بیشتر می‌شود.
+   fieldset و تیتر آبی نیز همان عرض جدول را دنبال می‌کنند.
+*/
+
+#content-main .inline-group
+.tabular.inline-related fieldset.module > table {
+    display: table !important;
+    width: max-content !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    table-layout: auto !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   Inline - Hide Original Object Text
+========================================================= */
+
+/* مخفی‌کردن متن اضافی بالای ورودی‌های اینلاین */
+#content-main .inline-group .tabular td.original p {
+    display: none !important;
+}
+
+/* =========================================================
+   Admin Form Inputs
+========================================================= */
+
+#content-main input[type="text"],
+#content-main input[type="number"],
+#content-main input[type="email"],
+#content-main input[type="tel"],
+#content-main input[type="url"],
+#content-main textarea,
+#content-main select {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   Responsive Layout - Tablets and Phones
+========================================================= */
+
+@media (max-width: 768px) {
+
+    #content {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    #content,
+    #content-main,
+    #changelist,
+    #changelist .changelist-form-container,
+    #changelist #changelist-form,
+    #changelist .results,
+    #content-main .inline-group,
+    #content-main .inline-group .tabular.inline-related {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* جدول‌های فهرست ادمین */
+    #changelist #result_list {
+        width: max-content !important;
+        min-width: 720px !important;
+        max-width: none !important;
+    }
+
+    /*
+       جدول اینلاین در صفحه کوچک حداقل 900px عرض دارد.
+       پیمایش افقی روی ناحیه tabular انجام می‌شود.
+    */
+
+    #content-main .inline-group
+    .tabular.inline-related fieldset.module {
+        width: max-content !important;
+        min-width: 100% !important;
+        max-width: none !important;
+    }
+
+    #content-main .inline-group
+    .tabular.inline-related fieldset.module > table {
+        display: table !important;
+        width: max-content !important;
+        min-width: 900px !important;
+        max-width: none !important;
+        table-layout: auto !important;
+    }
+
+    /*
+       تیتر آبی نباید محدود به عرض قابل مشاهده صفحه شود.
+       عرض آن باید با fieldset و جدول هماهنگ باشد.
+    */
+
+    #content-main .inline-group
+    .tabular.inline-related fieldset.module > h2 {
+        display: block !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* =========================================================
+   Small Phones
+========================================================= */
+
+@media (max-width: 480px) {
+
+    #content {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+}

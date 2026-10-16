@@ -1,0 +1,52 @@
+
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+
+    <style>
+        /* Remove Django 6's reserved filter sidebar width */
+        #changelist .changelist-form-container:has(#changelist-filter) > div {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            flex: 1 1 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Full-width content and results */
+        #changelist,
+        #changelist .changelist-form-container,
+        #changelist #changelist-form,
+        #changelist-form .results {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #changelist-filter {
+            display: none !important;
+        }
+
+        #changelist #result_list {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Responsive tables */
+        @media (max-width: 768px) {
+            #changelist-form .results {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #changelist #result_list {
+                min-width: 720px !important;
+            }
+        }
+    </style>
+{% endblock %}

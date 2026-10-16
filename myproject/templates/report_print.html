@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html
+    lang="fa"
+    dir="rtl"
+>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        چاپ {{ report_title|default:title }}
+    </title>
+
+    {% if embed_css %}
+
+        <style>
+            {{ report_css|safe }}
+        </style>
+
+    {% else %}
+
+        <link
+            rel="stylesheet"
+            href="{% static 'assets/css/invoice-print.css' %}"
+        >
+
+        <link
+            rel="stylesheet"
+            href="{% static 'assets/css/report-print.css' %}"
+        >
+
+    {% endif %}
+
+</head>
+
+
+<body class="print-only-page">
+
+
+{% include "reports/_report_document.html" %}
+
+
+{% if auto_print %}
+
+<script>
+
+window.addEventListener(
+    "load",
+    function () {
+
+        setTimeout(
+            function () {
+
+                window.print();
+
+            },
+            400
+        );
+
+    }
+);
+
+
+window.addEventListener(
+    "afterprint",
+    function () {
+
+        setTimeout(
+            function () {
+
+                window.close();
+
+            },
+            300
+        );
+
+    }
+);
+
+</script>
+
+{% endif %}
+
+</body>
+
+</html>

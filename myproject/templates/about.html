@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+درباره تعمیرگاه کیشانی
+{% endblock title %}
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/img-5.jpg);">
+      <div class="container position-relative">
+        <h1>درباره‌ی ما</h1>
+        <p class="about-description">ماموریت ما، فراتر از تعمیرات صرف، ارائه‌ی خدماتی است که اطمینان، ایمنی و آسودگی خاطر را برای مشتریان گرامی به ارمغان می‌آورد. تعهد ما به کیفیت، شفافیت در ارائه‌ی خدمات و دقت نظر در جزئیات، تعمیرگاه کیشانی را به گزینه‌ای ایده‌آل برای کسانی بدل ساخته است که به دنبال بالاترین استانداردهای فنی و پشتیبانی تخصصی برای خودروی خود هستند. ما در تعمیرگاه تخصصی کیشانی به ماشین شما اهمیت می‌دهیم. </p>
+        <nav class="breadcrumbs">
+        </nav>
+      </div>
+    </div><!-- /Page Title -->
+
+    <!-- About Section -->
+     <br>
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div
+              class="col-lg-6 position-relative align-self-start order-lg-last order-first"
+              data-aos="fade-up"
+              data-aos-delay="200"
+          >
+              <div class="site-map-card">
+
+                  <iframe
+                      src="https://balad.ir/embed?p=Ptn3MneACvIB2x"
+                      frameborder="0"
+                      width="100%"
+                      height="400"
+                      allowfullscreen
+                      style="border: 0;"
+                  ></iframe>
+
+              </div>
+          </div>
+
+          <div class="col-lg-6 content order-last  order-lg-first" data-aos="fade-up" data-aos-delay="100">
+            <ul>
+
+              <li>
+                <img
+                  src="{% static 'assets/img/icon-3.svg' %}"
+                  alt="نشانی"
+                  width="70px"
+                  height="70px"
+                  class="m-2"
+                >
+
+                <div>
+                  <h5>نشانی</h5>
+                  <p>
+                    تهران، مجیدیه شمالی، بزرگراه شهید سلیمانی «رسالت»، خیابان منصوری،
+                    خیابان برادران محمودی شرقی «لاهیجانی شرقی»، پلاک 101
+                  </p>
+                </div>
+              </li>
+
+              <li>
+                <img
+                  src="{% static 'assets/img/icon-4.svg' %}"
+                  alt="ساعات کاری"
+                  width="70px"
+                  height="70px"
+                  class="mt-4 m-2"
+                >
+
+                <div>
+                  <h5>ساعات کاری</h5>
+                  <p>
+                    شنبه تا پنجشنبه<br>
+                    شیفت صبح از ساعت 8:00 تا 13:00 <br>
+                    شیفت عصر از ساعت 15:00 تا 20:00
+                  </p>
+                </div>
+              </li>
+
+            <li>
+              <img
+                src="{% static 'assets/img/icon-8.svg' %}"
+                alt="تماس"
+                width="70px"
+                height="70px"
+                class="m-2"
+              >
+
+              <div>
+                <h5>تماس</h5>
+                <p>
+                  برای استعلام هزینه، هماهنگی و یا دریافت مشاوره، لطفا از طریق شماره تماس
+                  <a href="tel:+989123530423" dir="ltr">0912 353 0423</a>&nbsp;
+                  با ما در ارتباط باشید
+                </p>
+              </div>
+            </li>
+
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+    <br>
+
+        <!-- Faq Section -->
+    <br><section id="faq" class="faq section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+
+        <span>
+            پاسخ به دغدغه‌های فنی شما
+        </span>
+
+        <h2>
+            سوالات متداول
+        </h2>
+
+        <p class="about-description">
+            در این بخش به پرسش‌های متداول درباره نگهداری، عیب‌یابی و تعمیر خودرو پاسخ می‌دهیم
+            تا با شناخت بهتر علائم و نیازهای فنی خودرو، تصمیمی آگاهانه‌تر و مطمئن‌تر بگیرید
+        </p>
+
+    </div>
+    <!-- End Section Title -->
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="faq-container">
+              <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>چرا چراغ چک ماشین روشن می‌شود؟</h3>
+                <div class="faq-content">
+                  <p>روشن شدن چراغ چک نشانه‌ی این است که کامپیوتر خودرو، خطایی را در سیستم سوخت‌رسانی، احتراق یا
+                    آلایندگی شناسایی کرده است. این خطا می‌تواند از یک مشکل ساده مثل شل بودن در باک باشد تا خرابی
+                    سنسورها. <br>توصیه: هرگز چراغ چک را نادیده نگیرید؛ حتما با دستگاه دیاگ، کد خطا را بررسی کنید تا از
+                    آسیب های احتمالی به موتور جلوگیری شود.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>صدای سوت یا جیرجیر هنگام ترمزگیری نشانه‌ی چیست؟</h3>
+                <div class="faq-content">
+                  <p>این صدا معمولا اولین هشدار برای پایان یافتن عمر لنت‌های ترمز است. لنت‌ها دارای یک قطعه فلزی کوچک
+                    هستند که وقتی ضخامت لنت به حداقل می‌رسد، با دیسک برخورد کرده و صدای سوت ایجاد می‌کند تا شما را مطلع
+                    کند. <br>توصیه: برای جلوگیری از آسیب به دیسک ترمز که بسیار هزینه‌بر است، سریعا برای تعویض لنت اقدام
+                    کنید.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>چرا موتور خودرو بیش از حد داغ می‌کند (آمپر آب بالا می‌رود)؟</h3>
+                <div class="faq-content">
+                  <p>داغ کردن موتور معمولا به سیستم خنک‌ کننده مربوط است. شایع‌ترین دلایل شامل: کمبود مایع خنک کننده(ضد
+                    یخ)، خرابی ترموستات، خرابی فن رادیاتور یا نشتی در شیلنگ‌هاست. <br>توصیه: اگر آمپر به محدوده قرمز
+                    رسید، خودرو را خاموش و سوییچ را باز بگذارید و هرگز در رادیاتور را در حالت داغ باز نکنید. </p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>علت لرزش فرمان در سرعت بالا چیست؟</h3>
+                <div class="faq-content">
+                  <p>لرزش فرمان در سرعت بالای 80 یا 100 کیلومتر، در 90 درصد مواقع به دلیل عدم بالانس بودن چرخ‌هاست. اگر
+                    لرزش فقط هنگام ترمز گرفتن رخ می‌دهد، احتمالا دیسک ترمز تاب برداشته است. <br>توصیه: ابتدا برای بالانس
+                    چرخ‌ها اقدام کنید، اگر مشکل حل نشد، جلوبندی و دیسک ترمز را بررسی کنید.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>آیا کارواش بخارشور به قطعات خودرو آسیب می‌زند؟ آیا لازم است قبل از مراجعه به تعمیرگاه، آن را کارواش
+                  ببرم؟</h3>
+                <div class="faq-content">
+                  <p>خیر، کارواش بخارشور مدرن هیچ ضرری برای موتور خودرو، به‌خصوص قطعات برقی و موتوری ندارد. بخار آب با
+                    فشار کنترل شده و دمای بالا، بدون نیاز به مواد شیمیایی قوی، چربی‌ها، آلودگی‌ها و جرم‌ها را از سطوح
+                    پاک میکند و حتی به دلیل خشک بودن بخار، خطر نفوذ آب به بخش های حساس را به حداقل می‌رساند. <br>توصیه:
+                    پیش از مراجعه به تعمیرگاه، خودروی خود را به کارواش (ترجیحا بخارشور) ببرید. این اقدام به تکنسین‌های
+                    تعمیرگاه کمک می‌کند تا عیب‌یابی دقیق‌تری انجام دهند، همجنین تمیز بودن خودروی به شما امکان بررسی بهتر
+                    وضعیت ظاهری و اجزای آن را می‌دهد. بنابرین انجام کارواش قبل از تعمیر، فرایند تشخیص و رفع اشکال را
+                    تسهیل و بهینه‌سازی می‌کند.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Faq Section -->
+    <br>
+    
+    <!-- Work Space Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="assets/img/img-0.jpg" alt="">
+
+      <div class="container">
+        <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-10">
+            <div class="text-center">
+              <h3>خدمات ما</h3>
+              <p class="about-description">تعمیرگاه کیشانی با اتکا بر سال‌ها تجربه و تخصص در حوزه‌ی تعمیر و نگهداری انواع خودرو، به عنوان یکی از
+                پیشروان ارائه‌ی خدمات فنی تخصصی در این صنعت شناخته می‌شود. ما با بهره‌گیری از دانش روز، بهره‌مندی از
+                تکنولوژی های نوین و به کارگیری ابزارهای دقیق، مفتخر به ارائه‌ی راهکارهای جامع و مطمئن برای رفع
+                پیچیده‌ترین مشکلات فنی خودروها هستیم. </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-container">
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-4.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-0.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-2.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-9.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-1.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-6.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-7.png" alt="برند خودرو">
+            </a>
+
+            <a href="{% url 'services' %}" class="brand-box">
+                <img src="assets/img/brand-5.png" alt="برند خودرو">
+            </a>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Work Space Section -->
+
+ {% endblock content %}

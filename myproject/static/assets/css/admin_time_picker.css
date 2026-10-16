@@ -1,0 +1,250 @@
+.admin-time-picker {
+    position: absolute;
+    z-index: 100000;
+    width: 270px;
+    padding: 14px;
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+    direction: rtl;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.admin-time-picker * {
+    box-sizing: border-box;
+}
+
+.admin-time-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.admin-time-picker-title {
+    margin: 0;
+    color: #001973;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-time-picker-value {
+    min-width: 72px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #f4f5f7;
+    color: #222222;
+    text-align: center;
+    direction: ltr;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.admin-time-picker-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.admin-time-picker-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.admin-time-picker-field label {
+    color: #5d6572;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.admin-time-picker-input {
+    width: 100%;
+    height: 42px;
+    padding: 0 10px;
+    border: 1px solid #d5d9df;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #222222;
+    direction: ltr;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    outline: none;
+}
+
+.admin-time-picker-input:focus {
+    border-color: #001973;
+    box-shadow: 0 0 0 2px rgba(0, 25, 115, 0.08);
+}
+
+.admin-time-picker-hint {
+    margin-bottom: 12px;
+    color: #858d98;
+    font-size: 10px;
+    text-align: center;
+}
+
+.admin-time-picker-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #eeeeee;
+}
+
+.admin-time-now,
+.admin-time-confirm {
+    height: 38px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-time-now {
+    border: 1px solid #d5d9df;
+    background: #ffffff;
+    color: #001973;
+}
+
+.admin-time-now:hover {
+    background: #f5f7fa;
+}
+
+.admin-time-confirm {
+    border: 1px solid #001973;
+    background: #001973;
+    color: #ffffff;
+}
+
+.admin-time-confirm:hover {
+    background: #00145f;
+}
+
+.admin-time-error {
+    margin-top: 7px;
+    color: #b42318;
+    font-size: 10px;
+    text-align: center;
+}
+
+.invoice-payment-inline .admin-time-input {
+    display: none !important;
+}
+
+fieldset.repair-part-inline .original {
+    display: none !important;
+}
+
+fieldset.repair-service-inline .original {
+    display: none !important;
+}
+
+fieldset.invoice-service-inline .original,
+fieldset.invoice-part-inline .original {
+    display: none !important;
+}
+
+fieldset.invoice-service-inline th.original,
+fieldset.invoice-part-inline th.original {
+    display: none !important;
+}
+
+fieldset.invoice-service-inline table,
+fieldset.invoice-part-inline table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+fieldset.invoice-service-inline .field-title {
+    width: 70%;
+}
+
+fieldset.invoice-service-inline .field-total_price_display {
+    width: 30%;
+    text-align: left;
+    direction: ltr;
+    white-space: nowrap;
+}
+
+fieldset.invoice-part-inline .field-title {
+    width: 55%;
+}
+
+fieldset.invoice-part-inline .field-quantity {
+    width: 15%;
+    text-align: center;
+}
+
+fieldset.invoice-part-inline .field-total_price_display {
+    width: 30%;
+    text-align: left;
+    direction: ltr;
+    white-space: nowrap;
+}
+
+fieldset.invoice-service-inline .field-total_price_display,
+fieldset.invoice-part-inline .field-total_price_display {
+    vertical-align: middle;
+}
+
+fieldset.invoice-service-inline td,
+fieldset.invoice-part-inline td {
+    vertical-align: middle;
+}
+
+fieldset.invoice-service-inline input,
+fieldset.invoice-part-inline input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+fieldset.invoice-payment-inline .original {
+    display: none !important;
+}
+
+fieldset.invoice-payment-inline th.original {
+    display: none !important;
+}
+
+fieldset.invoice-payment-inline table {
+    width: 100% !important;
+    table-layout: auto !important;
+}
+
+fieldset.invoice-payment-inline table thead,
+fieldset.invoice-payment-inline table tbody {
+    width: 100%;
+}
+
+fieldset.invoice-payment-inline th,
+fieldset.invoice-payment-inline td {
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+fieldset.invoice-payment-inline .field-amount {
+    width: 30%;
+}
+
+fieldset.invoice-payment-inline .field-payment_method {
+    width: 30%;
+}
+
+fieldset.invoice-payment-inline .field-paid_at {
+    width: 40%;
+}
+
+fieldset.invoice-payment-inline input,
+fieldset.invoice-payment-inline select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}

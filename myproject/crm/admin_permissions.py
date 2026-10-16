@@ -7,6 +7,8 @@ from crm.permissions import (
     CRMRoles,
 )
 
+if admin.site.is_registered(Group):
+    admin.site.unregister(Group)
 
 @admin.register(Group)
 class CRMGroupAdmin(admin.ModelAdmin):
